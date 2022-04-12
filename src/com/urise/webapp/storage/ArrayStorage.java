@@ -17,33 +17,64 @@ public class ArrayStorage {
         }
         size = 0;
     }
-    public void update (Resume r){
 
+    public boolean find(Resume r) {
+        boolean found = false;
+        for (int i = 0; i < size; i++) {
+            if (storage[i].getUuid() == r.getUuid()) {
+                found = true;
+            }
+        }
+        return found;
+    }
+
+    public boolean find(String uuid) {
+        boolean found = false;
+        for (int i = 0; i < size; i++) {
+            if (uuid == storage[i].getUuid()) {
+                found = true;
+            }
+        }
+        return found;
+    }
+
+    public void update(Resume r) {
+        if (this.find(r)) {
+            for (int i = 0; i < size; i++) {
+                if (storage[i].getUuid() == r.getUuid()) {
+                    storage[i] = r;
+                }
+            }
+        } else System.out.println("ERROR. Not update. Resume " + r.getUuid() + " not present");
     }
 
     public void save(Resume r) {
-        storage[size++] = r;
+        if (!this.find(r) && size < 10000) {
+            storage[size++] = r;
+        } else if (this.find(r)) System.out.println("ERROR. Not save. Resume " + r.getUuid() + " present");
+        else if (size >= 10000) System.out.println("ERROR. Not save. Massive overflow");
     }
 
     public Resume get(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (Objects.equals(storage[i].toString(), uuid)) return storage[i];
+        if (this.find(uuid)) {
+            for (int i = 0; i < size; i++) {
+                if (uuid == storage[i].getUuid()) return storage[i];
+            }
         }
+        System.out.println("ERROR. Not get. Resume " + uuid + " not present");
         return null;
     }
 
     public void delete(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (Objects.equals(storage[i].toString(), uuid)) {
-                for (int j = i; j < size - 1; j++) {
-                    storage[j] = storage[j + 1];
+        if (this.find(uuid)) {
+            for (int i = 0; i < size; i++) {
+                if (uuid == storage[i].getUuid()) {
+                    storage[i] = storage[size - 1];
+                    storage[size - 1] = null;
+                    size--;
                 }
-                storage[size - 1] = null;
-                size--;
-                break;
             }
-        }
-
+        } else System.out.println("ERROR. Not delete. Resume " + uuid + " not present");
     }
 
     /**
