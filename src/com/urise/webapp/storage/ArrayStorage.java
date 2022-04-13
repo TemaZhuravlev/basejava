@@ -17,40 +17,25 @@ public class ArrayStorage {
         size = 0;
     }
 
-    public int find(Resume r) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid() == r.getUuid()) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    public int find(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (uuid == storage[i].getUuid()) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     public void update(Resume r) {
-        if (find(r) != -1) {
-            storage[find(r)] = r;
+        int index = findIndex(r.getUuid());
+        if (index != -1) {
+            storage[index] = r;
         } else System.out.println("ERROR. Not update. Resume " + r.getUuid() + " not present");
     }
 
     public void save(Resume r) {
-        if (find(r) == -1 && size < storage.length) {
+        int index = findIndex(r.getUuid());
+        if (index == -1 && size < storage.length) {
             storage[size++] = r;
-        } else if (find(r) != -1) System.out.println("ERROR. Not save. Resume " + r.getUuid() + " present");
+        } else if (index != -1) System.out.println("ERROR. Not save. Resume " + r.getUuid() + " present");
         else if (size >= storage.length) System.out.println("ERROR. Not save. Massive overflow");
     }
 
     public Resume get(String uuid) {
-        if (find(uuid) != -1) {
-            return storage[find(uuid)];
+        int index = findIndex(uuid);
+        if (index != -1) {
+            return storage[index];
         } else {
             System.out.println("ERROR. Not get. Resume " + uuid + " not present");
             return null;
@@ -58,8 +43,9 @@ public class ArrayStorage {
     }
 
     public void delete(String uuid) {
-        if (find(uuid) != -1) {
-            storage[find(uuid)] = storage[size - 1];
+        int index = findIndex(uuid);
+        if (index != -1) {
+            storage[index] = storage[size - 1];
             storage[size - 1] = null;
             size--;
         } else System.out.println("ERROR. Not delete. Resume " + uuid + " not present");
@@ -69,11 +55,19 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     public Resume[] getAll() {
-        Resume[] resumes = Arrays.copyOf(storage, size);
-        return resumes;
+        return Arrays.copyOf(storage, size);
     }
 
     public int size() {
         return size;
+    }
+
+    private int findIndex(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (uuid == storage[i].getUuid()) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
