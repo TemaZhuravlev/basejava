@@ -3,13 +3,14 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
-import java.util.Objects;
+
 
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
+    private static final int STORAGE_LIMIT = 10000;
+    private Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size = 0;
 
     public void clear() {
@@ -26,7 +27,7 @@ public class ArrayStorage {
 
     public void save(Resume r) {
         int index = findIndex(r.getUuid());
-        if (size < storage.length) {
+        if (size < STORAGE_LIMIT) {
             if (index == -1) {
                 storage[size++] = r;
             } else System.out.println("ERROR. Not save. Resume " + r.getUuid() + " present");
