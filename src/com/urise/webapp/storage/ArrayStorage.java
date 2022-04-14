@@ -26,13 +26,11 @@ public class ArrayStorage {
 
     public void save(Resume r) {
         int index = findIndex(r.getUuid());
-        if (size < storage.length){
-            if (index == -1){
+        if (size < storage.length) {
+            if (index == -1) {
                 storage[size++] = r;
-            }
-            else System.out.println("ERROR. Not save. Resume " + r.getUuid() + " present");
-        }
-        else System.out.println("ERROR. Not save. Massive overflow");
+            } else System.out.println("ERROR. Not save. Resume " + r.getUuid() + " present");
+        } else System.out.println("ERROR. Not save. Array overflow");
     }
 
     public Resume get(String uuid) {
