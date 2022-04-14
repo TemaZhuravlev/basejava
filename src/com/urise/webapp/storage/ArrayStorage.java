@@ -26,20 +26,22 @@ public class ArrayStorage {
 
     public void save(Resume r) {
         int index = findIndex(r.getUuid());
-        if (index == -1 && size < storage.length) {
-            storage[size++] = r;
-        } else if (index != -1) System.out.println("ERROR. Not save. Resume " + r.getUuid() + " present");
-        else if (size >= storage.length) System.out.println("ERROR. Not save. Massive overflow");
+        if (size < storage.length){
+            if (index == -1){
+                storage[size++] = r;
+            }
+            else System.out.println("ERROR. Not save. Resume " + r.getUuid() + " present");
+        }
+        else System.out.println("ERROR. Not save. Massive overflow");
     }
 
     public Resume get(String uuid) {
         int index = findIndex(uuid);
         if (index != -1) {
             return storage[index];
-        } else {
-            System.out.println("ERROR. Not get. Resume " + uuid + " not present");
-            return null;
         }
+        System.out.println("ERROR. Not get. Resume " + uuid + " not present");
+        return null;
     }
 
     public void delete(String uuid) {
