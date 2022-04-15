@@ -17,13 +17,31 @@ public abstract class AbstractArrayStorage implements Storage {
         return size;
     }
 
+    public void clear() {
+        Arrays.fill(storage, 0, size, null);
+        size = 0;
+    }
+
+    public void update(Resume r) {
+        int index = findIndex(r.getUuid());
+        if (index >= 0) {
+            storage[index] = r;
+        } else System.out.println("ERROR. Not update. Resume " + r.getUuid() + " not present");
+    }
+
     public Resume get(String uuid) {
         int index = findIndex(uuid);
-        if (index != -1) {
+        if (index >= 0) {
             return storage[index];
         }
         System.out.println("ERROR. Not get. Resume " + uuid + " not present");
         return null;
+    }
+    /**
+     * @return array, contains only Resumes in storage (without null)
+     */
+    public Resume[] getAll() {
+        return Arrays.copyOfRange(storage, 0, size);
     }
 
     protected abstract int findIndex(String uuid);
