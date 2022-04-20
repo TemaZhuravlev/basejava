@@ -87,7 +87,11 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = StorageException.class)
     public void saveStorageOverflow() {
-        fillStorage();
+        try {
+            fillStorage();
+        } catch (StorageException exception) {
+            Assert.fail("Storage Overflow ahead of time");
+        }
         Resume resume = new Resume("uuid");
         storage.save(resume);
     }
