@@ -24,17 +24,17 @@ public abstract class AbstractArrayStorageTest {
     private static final String UUID_3 = "uuid3";
     private static final String DUMMY = "dummy";
 
-    private static final Resume r1 = new Resume(UUID_1);
-    private static final Resume r2 = new Resume(UUID_2);
-    private static final Resume r3 = new Resume(UUID_3);
+    private static final Resume RESUME_1 = new Resume(UUID_1);
+    private static final Resume RESUME_2 = new Resume(UUID_2);
+    private static final Resume RESUME_3 = new Resume(UUID_3);
 
 
     @Before
     public void setUp() {
         storage.clear();
-        storage.save(r1);
-        storage.save(r2);
-        storage.save(r3);
+        storage.save(RESUME_1);
+        storage.save(RESUME_2);
+        storage.save(RESUME_3);
     }
 
     public void fillStorage() {
@@ -67,7 +67,7 @@ public abstract class AbstractArrayStorageTest {
     public void update() {
         Resume resume = new Resume(UUID_2);
         storage.update(resume);
-        Assert.assertTrue(resume.equals(r2));
+        Assert.assertSame(resume, storage.get(resume.getUuid()));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -78,9 +78,9 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void get() {
-        checkGet(r1, UUID_1);
-        checkGet(r2, UUID_2);
-        checkGet(r3, UUID_3);
+        checkGet(RESUME_1, UUID_1);
+        checkGet(RESUME_2, UUID_2);
+        checkGet(RESUME_3, UUID_3);
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -93,11 +93,12 @@ public abstract class AbstractArrayStorageTest {
         Resume resume = new Resume("uuid4");
         storage.save(resume);
         checkGet(resume, "uuid4");
+        checkSize(4);
     }
 
     @Test(expected = ExistStorageException.class)
     public void saveExist() {
-        storage.save(r1);
+        storage.save(RESUME_1);
     }
 
     @Test(expected = StorageException.class)
@@ -115,7 +116,7 @@ public abstract class AbstractArrayStorageTest {
     public void delete() {
         int size = storage.size();
         storage.delete(UUID_2);
-        checkSize(size-1);
+        checkSize(size - 1);
         storage.get(UUID_2);
     }
 
@@ -129,8 +130,8 @@ public abstract class AbstractArrayStorageTest {
     public void getAll() {
         Resume[] allResume = storage.getAll();
         Assert.assertEquals(storage.size(), allResume.length);
-        checkGet(r1,allResume[0].getUuid());
-        checkGet(r2,allResume[1].getUuid());
-        checkGet(r3,allResume[2].getUuid());
+        checkGet(RESUME_1, allResume[0].getUuid());
+        checkGet(RESUME_2, allResume[1].getUuid());
+        checkGet(RESUME_3, allResume[2].getUuid());
     }
 }
