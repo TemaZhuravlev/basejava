@@ -7,25 +7,25 @@ import com.urise.webapp.model.Resume;
 public abstract class AbstractStorage implements Storage {
 
     public void update(Resume r) {
-        int index = findIndex(r.getUuid());
+        int index = keySearch(r.getUuid());
         checkNotExist(index, r.getUuid());
         setResume(index, r);
     }
 
     public Resume get(String uuid) {
-        int index = findIndex(uuid);
+        int index = keySearch(uuid);
         checkNotExist(index, uuid);
         return getResume(index);
     }
 
     public void delete(String uuid) {
-        int index = findIndex(uuid);
+        int index = keySearch(uuid);
         checkNotExist(index, uuid);
         deleteResume(index);
     }
 
     public void save(Resume r) {
-        int index = findIndex(r.getUuid());
+        int index = keySearch(r.getUuid());
         checkExist(index, r.getUuid());
         saveResume(index, r);
     }
@@ -44,7 +44,7 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Resume getResume(int index);
 
-    protected abstract int findIndex(String uuid);
+    protected abstract int keySearch(String uuid);
 
     protected abstract void setResume(int index, Resume r);
 

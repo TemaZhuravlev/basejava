@@ -1,7 +1,5 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.ExistStorageException;
-import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.ArrayList;
@@ -25,6 +23,12 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
+    protected int keySearch(String uuid) {
+        Resume searchKey = new Resume(uuid);
+        return storage.indexOf(searchKey);
+    }
+
+    @Override
     protected Resume getResume(int index) {
         return storage.get(index);
     }
@@ -32,12 +36,6 @@ public class ListStorage extends AbstractStorage {
     @Override
     protected void setResume(int index, Resume r) {
         storage.set(index, r);
-    }
-
-    @Override
-    protected int findIndex(String uuid) {
-        Resume searchKey = new Resume(uuid);
-        return storage.indexOf(searchKey);
     }
 
     @Override
