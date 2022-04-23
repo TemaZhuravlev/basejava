@@ -20,26 +20,6 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public void save(Resume r) {
-        int index = findIndex(r.getUuid());
-        if (index >= 0) {
-            throw new ExistStorageException(r.getUuid());
-        } else {
-            storage.add(r);
-        }
-    }
-
-    @Override
-    public void delete(String uuid) {
-        int index = findIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            storage.remove(index);
-        }
-    }
-
-    @Override
     public Resume[] getAll() {
         return storage.toArray(new Resume[0]);
     }
@@ -60,4 +40,13 @@ public class ListStorage extends AbstractStorage {
         return storage.indexOf(searchKey);
     }
 
+    @Override
+    protected void deleteResume(int index) {
+        storage.remove(index);
+    }
+
+    @Override
+    protected void saveResume(int index, Resume r) {
+        storage.add(r);
+    }
 }
