@@ -7,48 +7,48 @@ import com.urise.webapp.model.Resume;
 public abstract class AbstractStorage implements Storage {
 
     public void update(Resume r) {
-        int index = keySearch(r.getUuid());
-        checkNotExist(index, r.getUuid());
+        Object index = checkNotExist(r.getUuid());
         setResume(index, r);
     }
 
     public Resume get(String uuid) {
-        int index = keySearch(uuid);
-        checkNotExist(index, uuid);
+        Object index = checkNotExist(uuid);
         return getResume(index);
     }
 
     public void delete(String uuid) {
-        int index = keySearch(uuid);
-        checkNotExist(index, uuid);
+        Object index = checkNotExist(uuid);
         deleteResume(index);
     }
 
     public void save(Resume r) {
-        int index = keySearch(r.getUuid());
-        checkExist(index, r.getUuid());
+        Object index = checkExist(r.getUuid());
         saveResume(index, r);
     }
 
-    protected void checkExist(int index, String uuid) {
-        if (index >= 0) {
+    protected Object checkExist(String uuid) {
+        if (containsIndex(uuid)) {
             throw new ExistStorageException(uuid);
         }
+        return getSearchKey(uuid);
     }
 
-    protected void checkNotExist(int index, String uuid) {
-        if (index < 0) {
+    protected Object checkNotExist(String uuid) {
+        if (!containsIndex(uuid)) {
             throw new NotExistStorageException(uuid);
         }
+        return getSearchKey(uuid);
     }
 
-    protected abstract Resume getResume(int index);
+    protected abstract Resume getResume(Object index);
 
-    protected abstract int keySearch(String uuid);
+    protected abstract Object getSearchKey(String uuid);
 
-    protected abstract void setResume(int index, Resume r);
+    protected abstract boolean containsIndex(String uuid);
 
-    protected abstract void deleteResume(int index);
+    protected abstract void setResume(Object index, Resume r);
 
-    protected abstract void saveResume(int index, Resume r);
+    protected abstract void deleteResume(Object index);
+
+    protected abstract void saveResume(Object index, Resume r);
 }
