@@ -21,9 +21,9 @@ public abstract class AbstractStorageTest {
     private static final String UUID_3 = "uuid3";
     private static final String DUMMY = "dummy";
 
-    private static final Resume RESUME_1 = new Resume(UUID_1);
-    private static final Resume RESUME_2 = new Resume(UUID_2);
-    private static final Resume RESUME_3 = new Resume(UUID_3);
+    protected static final Resume RESUME_1 = new Resume(UUID_1);
+    protected static final Resume RESUME_2 = new Resume(UUID_2);
+    protected static final Resume RESUME_3 = new Resume(UUID_3);
 
     @Before
     public void setUp() {
@@ -44,7 +44,7 @@ public abstract class AbstractStorageTest {
         Assert.assertEquals(expectedSize, storage.size());
     }
 
-    private void checkGet(Resume r, String uuid) {
+    protected void checkGet(Resume r, String uuid) {
         Assert.assertEquals(r, storage.get(uuid));
     }
 
