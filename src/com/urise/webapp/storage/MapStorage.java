@@ -2,10 +2,11 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
-import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
-public class ListStorage extends AbstractStorage {
-    protected ArrayList<Resume> storage = new ArrayList<>();
+public class MapStorage extends AbstractStorage {
+    protected Map<String, Resume> storage = new TreeMap<>();
 
     @Override
     public int size() {
@@ -19,37 +20,41 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected void deleteResume(Object index) {
-        storage.remove((int) index);
+        storage.remove((String) index);
     }
 
     @Override
     protected void saveResume(Object index, Resume r) {
-        storage.add(r);
+        storage.put((String) index, r);
     }
 
     @Override
     protected boolean isExist(Object index) {
-        return (int) index >= 0;
+        return storage.containsKey((String) index);
     }
 
     @Override
     public Resume[] getAll() {
-        return storage.toArray(new Resume[0]);
+        return storage.values().toArray(new Resume[0]);
     }
 
     @Override
     protected Resume getResume(Object index) {
-        return storage.get((int) index);
+        return storage.get((String) index);
     }
 
     @Override
     protected void setResume(Object index, Resume r) {
-        storage.set((int) index, r);
+        storage.put((String) index, r);
     }
 
     @Override
     protected Object getSearchKey(String uuid) {
-        Resume searchKey = new Resume(uuid);
-        return storage.indexOf(searchKey);
+        for (Map.Entry<String, Resume> resumeEntry : storage.entrySet()) {
+            if (uuid.equals(resumeEntry.getValue().getUuid())) {
+                return resumeEntry.getKey();
+            }
+        }
+        return uuid;
     }
 }
