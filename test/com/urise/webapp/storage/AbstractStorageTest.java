@@ -7,6 +7,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static com.urise.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
 
 public abstract class AbstractStorageTest {
@@ -21,9 +23,13 @@ public abstract class AbstractStorageTest {
     private static final String UUID_3 = "uuid3";
     private static final String DUMMY = "dummy";
 
-    protected static final Resume RESUME_1 = new Resume(UUID_1);
-    protected static final Resume RESUME_2 = new Resume(UUID_2);
-    protected static final Resume RESUME_3 = new Resume(UUID_3);
+    private static final String FULLNAME_1 = "Ivanov Ivan";
+    private static final String FULLNAME_2 = "Petrov Petr";
+    private static final String FULLNAME_3 = "Petrov Petr";
+
+    protected static final Resume RESUME_1 = new Resume(UUID_1, FULLNAME_1);
+    protected static final Resume RESUME_2 = new Resume(UUID_2, FULLNAME_2);
+    protected static final Resume RESUME_3 = new Resume(UUID_3, FULLNAME_3);
 
     @Before
     public void setUp() {
@@ -114,10 +120,10 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAll() {
-        Resume[] allResume = storage.getAll();
-        Assert.assertEquals(storage.size(), allResume.length);
-        checkGet(RESUME_1, allResume[0].getUuid());
-        checkGet(RESUME_2, allResume[1].getUuid());
-        checkGet(RESUME_3, allResume[2].getUuid());
+        List<Resume> allResume = storage.getAllSorted();
+        Assert.assertEquals(storage.size(), allResume.size());
+        checkGet(RESUME_1, allResume.get(0).getUuid());
+        checkGet(RESUME_2, allResume.get(1).getUuid());
+        checkGet(RESUME_3, allResume.get(2).getUuid());
     }
 }

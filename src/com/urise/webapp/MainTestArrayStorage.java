@@ -7,12 +7,12 @@ import com.urise.webapp.storage.*;
  * Test for your com.urise.webapp.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    private final static Storage ARRAY_STORAGE = new ArrayStorage();
+    private final static Storage ARRAY_STORAGE = new MapResumeStorage();
 
     public static void main(String[] args) {
-        Resume r1 = new Resume("uuid1");
-        Resume r2 = new Resume("uuid2");
-        Resume r3 = new Resume("uuid3");
+        Resume r1 = new Resume("uuid1", "Ivanov Ivan");
+        Resume r2 = new Resume("uuid2", "Petrov Petr");
+        Resume r3 = new Resume("uuid3", "Petrov Petr");
 
         ARRAY_STORAGE.save(r3);
         ARRAY_STORAGE.save(r1);
@@ -21,7 +21,7 @@ public class MainTestArrayStorage {
         System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
 
- //       ARRAY_STORAGE.get("dummy");
+        ARRAY_STORAGE.get("dummy");
 
         ARRAY_STORAGE.update(r3);
 
@@ -36,7 +36,7 @@ public class MainTestArrayStorage {
 
     static void printAll() {
         System.out.println("\nGet All");
-        for (Resume r : ARRAY_STORAGE.getAll()) {
+        for (Resume r : ARRAY_STORAGE.getAllSorted()) {
             System.out.println(r);
         }
     }
