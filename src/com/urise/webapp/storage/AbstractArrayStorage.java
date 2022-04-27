@@ -48,10 +48,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
+    protected List<Resume> getList() {
         List<Resume> resumeList = new ArrayList<>();
         Collections.addAll(resumeList, Arrays.copyOfRange(storage, 0, size));
-        resumeList.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
         return resumeList;
     }
 

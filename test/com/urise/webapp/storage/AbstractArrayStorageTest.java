@@ -5,6 +5,8 @@ import com.urise.webapp.model.Resume;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static com.urise.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
+
 public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
     public AbstractArrayStorageTest(Storage storage) {
         super(storage);
@@ -19,5 +21,12 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
         }
         Resume resume = new Resume("uuid");
         storage.save(resume);
+    }
+
+    private void fillStorage() {
+        storage.clear();
+        for (int i = 0; i < STORAGE_LIMIT; i++) {
+            storage.save(new Resume("uuid" + i));
+        }
     }
 }

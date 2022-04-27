@@ -9,27 +9,25 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static com.urise.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
-
 public abstract class AbstractStorageTest {
     protected Storage storage;
-
-    public AbstractStorageTest(Storage storage) {
-        this.storage = storage;
-    }
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String DUMMY = "dummy";
 
-    private static final String FULLNAME_1 = "Ivanov Ivan";
-    private static final String FULLNAME_2 = "Petrov Petr";
-    private static final String FULLNAME_3 = "Petrov Petr";
+    private static final String FULL_NAME_1 = "Ivanov Ivan";
+    private static final String FULL_NAME_2 = "Petrov Petr";
+    private static final String FULL_NAME_3 = "Petrov Petr";
 
-    protected static final Resume RESUME_1 = new Resume(UUID_1, FULLNAME_1);
-    protected static final Resume RESUME_2 = new Resume(UUID_2, FULLNAME_2);
-    protected static final Resume RESUME_3 = new Resume(UUID_3, FULLNAME_3);
+    protected static final Resume RESUME_1 = new Resume(UUID_1, FULL_NAME_1);
+    protected static final Resume RESUME_2 = new Resume(UUID_2, FULL_NAME_2);
+    protected static final Resume RESUME_3 = new Resume(UUID_3, FULL_NAME_3);
+
+    public AbstractStorageTest(Storage storage) {
+        this.storage = storage;
+    }
 
     @Before
     public void setUp() {
@@ -37,13 +35,6 @@ public abstract class AbstractStorageTest {
         storage.save(RESUME_1);
         storage.save(RESUME_2);
         storage.save(RESUME_3);
-    }
-
-    protected void fillStorage() {
-        storage.clear();
-        for (int i = 0; i < STORAGE_LIMIT; i++) {
-            storage.save(new Resume("uuid" + i));
-        }
     }
 
     private void checkSize(int expectedSize) {
@@ -119,7 +110,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAll() {
+    public void getAllSorted() {
         List<Resume> allResume = storage.getAllSorted();
         Assert.assertEquals(storage.size(), allResume.size());
         checkGet(RESUME_1, allResume.get(0).getUuid());
