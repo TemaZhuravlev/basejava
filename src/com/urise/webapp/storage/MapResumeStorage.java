@@ -18,42 +18,37 @@ public class MapResumeStorage extends AbstractStorage {
     }
 
     @Override
-    protected void deleteResume(Object index) {
-        storage.remove((String) index);
+    protected void deleteResume(Object resume) {
+        storage.remove(((Resume)resume).getUuid());
     }
 
     @Override
-    protected void saveResume(Object index, Resume r) {
-        storage.put((String) index, r);
+    protected void saveResume(Object resume, Resume r) {
+        storage.put(r.getUuid(), r);
     }
 
     @Override
-    protected boolean isExist(Object index) {
-        return storage.containsKey((String) index);
+    protected boolean isExist(Object resume) {
+        return resume != null;
     }
 
     @Override
-    protected List<Resume> getList() {
+    protected List<Resume> doGetAllSorted() {
         return new ArrayList<>(storage.values());
     }
 
     @Override
-    protected Resume getResume(Object index) {
-        return storage.get((String) index);
+    protected Resume getResume(Object resume) {
+        return (Resume)resume;
     }
 
     @Override
-    protected void setResume(Object index, Resume r) {
-        storage.put((String) index, r);
+    protected void setResume(Object resume, Resume r) {
+        storage.put(((Resume)resume).getUuid(), r);
     }
 
     @Override
     protected Object getSearchKey(String uuid) {
-        for (Map.Entry<String, Resume> resumeEntry : storage.entrySet()) {
-            if (uuid.equals(resumeEntry.getValue().getUuid())) {
-                return resumeEntry.getKey();
-            }
-        }
-        return uuid;
+        return storage.get(uuid);
     }
 }
