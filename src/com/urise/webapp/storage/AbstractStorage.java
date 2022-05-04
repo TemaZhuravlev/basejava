@@ -7,38 +7,38 @@ import com.urise.webapp.model.Resume;
 import java.util.Comparator;
 import java.util.List;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<SK> implements Storage {
 
     public void update(Resume r) {
-        Object index = getNotExistSearchKey(r.getUuid());
+        SK index = getNotExistSearchKey(r.getUuid());
         setResume(index, r);
     }
 
     public Resume get(String uuid) {
-        Object index = getNotExistSearchKey(uuid);
+        SK index = getNotExistSearchKey(uuid);
         return getResume(index);
     }
 
     public void delete(String uuid) {
-        Object index = getNotExistSearchKey(uuid);
+        SK index = getNotExistSearchKey(uuid);
         deleteResume(index);
     }
 
     public void save(Resume r) {
-        Object index = getExistSearchKey(r.getUuid());
+        SK index = getExistSearchKey(r.getUuid());
         saveResume(index, r);
     }
 
-    private Object getExistSearchKey(String uuid) {
-        Object index = getSearchKey(uuid);
+    private SK getExistSearchKey(String uuid) {
+        SK index = getSearchKey(uuid);
         if (isExist(index)) {
             throw new ExistStorageException(uuid);
         }
         return index;
     }
 
-    private Object getNotExistSearchKey(String uuid) {
-        Object index = getSearchKey(uuid);
+    private SK getNotExistSearchKey(String uuid) {
+        SK index = getSearchKey(uuid);
         if (!isExist(index)) {
             throw new NotExistStorageException(uuid);
         }
@@ -53,15 +53,15 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract List<Resume> doGetAllSorted();
 
-    protected abstract Resume getResume(Object index);
+    protected abstract Resume getResume(SK index);
 
-    protected abstract Object getSearchKey(String uuid);
+    protected abstract SK getSearchKey(String uuid);
 
-    protected abstract boolean isExist(Object index);
+    protected abstract boolean isExist(SK index);
 
-    protected abstract void setResume(Object index, Resume r);
+    protected abstract void setResume(SK index, Resume r);
 
-    protected abstract void deleteResume(Object index);
+    protected abstract void deleteResume(SK index);
 
-    protected abstract void saveResume(Object index, Resume r);
+    protected abstract void saveResume(SK index, Resume r);
 }

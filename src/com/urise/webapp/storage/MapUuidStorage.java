@@ -4,7 +4,7 @@ import com.urise.webapp.model.Resume;
 
 import java.util.*;
 
-public class MapUuidStorage extends AbstractStorage {
+public class MapUuidStorage extends AbstractStorage<String> {
     protected Map<String, Resume> storage = new HashMap<>();
 
     @Override
@@ -18,18 +18,18 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected void deleteResume(Object index) {
-        storage.remove((String) index);
+    protected void deleteResume(String index) {
+        storage.remove(index);
     }
 
     @Override
-    protected void saveResume(Object index, Resume r) {
-        storage.put((String) index, r);
+    protected void saveResume(String index, Resume r) {
+        storage.put(index, r);
     }
 
     @Override
-    protected boolean isExist(Object index) {
-        return storage.containsKey((String) index);
+    protected boolean isExist(String index) {
+        return storage.containsKey(index);
     }
 
     @Override
@@ -38,17 +38,17 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getResume(Object index) {
-        return storage.get((String) index);
+    protected Resume getResume(String index) {
+        return storage.get(index);
     }
 
     @Override
-    protected void setResume(Object index, Resume r) {
-        storage.put((String) index, r);
+    protected void setResume(String index, Resume r) {
+        storage.put(index, r);
     }
 
     @Override
-    protected Object getSearchKey(String uuid) {
+    protected String getSearchKey(String uuid) {
         for (Map.Entry<String, Resume> resumeEntry : storage.entrySet()) {
             if (uuid.equals(resumeEntry.getValue().getUuid())) {
                 return resumeEntry.getKey();

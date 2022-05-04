@@ -1,5 +1,6 @@
 package com.urise.webapp.model;
 
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -19,6 +20,8 @@ public class Resume{
     }
 
     public Resume(String uuid, String fullName) {
+        Objects.requireNonNull(uuid, "uuid must not ne null");
+        Objects.requireNonNull(fullName, "fullName must not ne null");
         this.uuid = uuid;
         this.fullName = fullName;
     }
