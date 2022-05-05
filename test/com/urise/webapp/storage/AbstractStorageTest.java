@@ -58,7 +58,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume resume = new Resume(UUID_2);
+        Resume resume = new Resume(UUID_2, FULL_NAME_2);
         storage.update(resume);
         Assert.assertSame(resume, storage.get(resume.getUuid()));
     }
@@ -83,7 +83,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void save() {
-        Resume resume = new Resume("uuid4");
+        Resume resume = new Resume("uuid4", "Name4");
         storage.save(resume);
         checkGet(resume, "uuid4");
         checkSize(4);

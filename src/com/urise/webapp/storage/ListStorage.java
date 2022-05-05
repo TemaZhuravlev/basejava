@@ -30,7 +30,7 @@ public class ListStorage extends AbstractStorage<Integer> {
 
     @Override
     protected boolean isExist(Integer index) {
-        return index >= 0;
+        return index != null;
     }
 
     @Override
@@ -50,7 +50,11 @@ public class ListStorage extends AbstractStorage<Integer> {
 
     @Override
     protected Integer getSearchKey(String uuid) {
-        Resume searchKey = new Resume(uuid);
-        return storage.indexOf(searchKey);
+        for (int i = 0; i < storage.size(); i++) {
+            if (storage.get(i).getUuid().equals(uuid)) {
+                return i;
+            }
+        }
+        return null;
     }
 }
