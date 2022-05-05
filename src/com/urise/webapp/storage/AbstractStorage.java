@@ -6,25 +6,32 @@ import com.urise.webapp.model.Resume;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Logger;
 
 public abstract class AbstractStorage<SK> implements Storage {
 
+    private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
+
     public void update(Resume r) {
+        LOG.info("Update " + r);
         SK index = getNotExistSearchKey(r.getUuid());
         setResume(index, r);
     }
 
     public Resume get(String uuid) {
+        LOG.info("Get " + uuid);
         SK index = getNotExistSearchKey(uuid);
         return getResume(index);
     }
 
     public void delete(String uuid) {
+        LOG.info("Delete " + uuid);
         SK index = getNotExistSearchKey(uuid);
         deleteResume(index);
     }
 
     public void save(Resume r) {
+        LOG.info("Save " + r);
         SK index = getExistSearchKey(r.getUuid());
         saveResume(index, r);
     }
@@ -32,6 +39,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     private SK getExistSearchKey(String uuid) {
         SK index = getSearchKey(uuid);
         if (isExist(index)) {
+            LOG.warning("Resume " + uuid + " already exist");
             throw new ExistStorageException(uuid);
         }
         return index;
@@ -40,12 +48,14 @@ public abstract class AbstractStorage<SK> implements Storage {
     private SK getNotExistSearchKey(String uuid) {
         SK index = getSearchKey(uuid);
         if (!isExist(index)) {
+            LOG.warning("Resume " + uuid + " not exist");
             throw new NotExistStorageException(uuid);
         }
         return index;
     }
 
     public List<Resume> getAllSorted() {
+        LOG.info("getAllSorted");
         List<Resume> resumeList = doGetAllSorted();
         resumeList.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
         return resumeList;
