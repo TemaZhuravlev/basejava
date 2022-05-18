@@ -1,6 +1,8 @@
 package com.urise.webapp.model;
 
+import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 import java.util.UUID;
 
 /**
@@ -10,9 +12,13 @@ public class Resume{
 
     private final String uuid;
     private final String fullName;
+    private Map<ContactType, String> contacts;
+    private Map<SectionType, AbstractSection> sections;
 
     public Resume(String fullName){
         this (UUID.randomUUID().toString(), fullName);
+        contacts = new TreeMap<>();
+        sections = new TreeMap<>();
     }
 
     public Resume(String uuid, String fullName) {
@@ -20,6 +26,8 @@ public class Resume{
         Objects.requireNonNull(fullName, "fullName must not ne null");
         this.uuid = uuid;
         this.fullName = fullName;
+        contacts = new TreeMap<>();
+        sections = new TreeMap<>();
     }
 
     @Override
@@ -52,5 +60,13 @@ public class Resume{
 
     public String getFullName() {
         return fullName;
+    }
+
+    public Map<ContactType, String> getContacts() {
+        return contacts;
+    }
+
+    public Map<SectionType, AbstractSection> getSections() {
+        return sections;
     }
 }
