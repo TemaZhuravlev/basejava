@@ -1,4 +1,6 @@
-package com.urise.webapp.model;
+package com.urise.webapp;
+
+import com.urise.webapp.model.*;
 
 import java.util.Map;
 

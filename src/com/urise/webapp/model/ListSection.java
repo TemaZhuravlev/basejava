@@ -3,6 +3,7 @@ package com.urise.webapp.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class ListSection extends AbstractSection {
 
@@ -14,10 +15,27 @@ public class ListSection extends AbstractSection {
 
     @Override
     public String toString() {
-        String temp = "";
+        StringBuilder temp = new StringBuilder();
         for (String element : elements) {
-            temp += "- " + element + "\n";
+            temp.append("- ").append(element).append("\n");
         }
-        return temp;
+        return temp.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ListSection that = (ListSection) o;
+        return elements.equals(that.elements);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(elements);
+    }
+
+    public List<String> getElements() {
+        return elements;
     }
 }
