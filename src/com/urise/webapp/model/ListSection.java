@@ -4,19 +4,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ListSection extends AbstractSection{
+public class ListSection extends AbstractSection {
 
-    List<String> elements;
+    List<String> elements = new ArrayList<>();
 
-    public ListSection(String...elements){
-        this.elements = new ArrayList<>();
+    public ListSection(String... elements) {
         this.elements.addAll(Arrays.asList(elements));
     }
 
     @Override
-    public void showInfo() {
+    public String toString() {
+        String temp = "";
         for (String element : elements) {
-            System.out.println("- " + element);
+            temp += "- " + element + "\n";
         }
+        return temp;
     }
 }

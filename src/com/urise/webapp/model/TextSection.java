@@ -8,7 +8,7 @@ public class TextSection extends AbstractSection {
     }
 
     @Override
-    public void showInfo() {
-        System.out.println(content);
+    public String toString() {
+        return content;
     }
 }
