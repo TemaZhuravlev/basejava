@@ -8,7 +8,6 @@ public class ResumeTestData {
     public static void main(String[] args) {
         Resume resume1 = new Resume("uuid1", "Григорий Кислин");
 
-
         /**
          * Block contacts
          */

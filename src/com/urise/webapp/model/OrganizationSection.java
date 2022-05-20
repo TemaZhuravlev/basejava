@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class OrganizationSection extends AbstractSection {
 
-    private List<Organization> organizations = new ArrayList<>();
+    private final List<Organization> organizations = new ArrayList<>();
 
     public OrganizationSection(Organization... organizations) {
         this.organizations.addAll(Arrays.asList(organizations));

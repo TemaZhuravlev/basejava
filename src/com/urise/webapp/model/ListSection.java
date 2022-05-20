@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class ListSection extends AbstractSection {
 
-    List<String> elements = new ArrayList<>();
+    private final List<String> elements = new ArrayList<>();
 
     public ListSection(String... elements) {
         this.elements.addAll(Arrays.asList(elements));

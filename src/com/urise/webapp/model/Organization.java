@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class Organization {
-    private String link;
-    private String title;
-    private List<Period> periods = new ArrayList<>();
+    private final String link;
+    private final String title;
+    private final List<Period> periods = new ArrayList<>();
 
     public Organization(String title, String link, Period... periods) {
         this.link = link;
