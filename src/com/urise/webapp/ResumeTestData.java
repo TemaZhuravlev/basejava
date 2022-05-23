@@ -52,23 +52,23 @@ public class ResumeTestData {
 
         resume1.getSections().put(SectionType.EXPERIENCE, new OrganizationSection(
                 new Organization("Java Online Projects", "http://javaops.ru/",
-                        new Period("10/2013", "Сейчас", "Автор проекта.\n" +
-                                "Создание, организация и проведение Java онлайн проектов и стажировок.")),
+                        new Period("10/2013", "Сейчас", "Автор проекта", "Создание, " +
+                                "организация и проведение Java онлайн проектов и стажировок.")),
                 new Organization("Wrike", "https://www.wrike.com/",
-                        new Period("10/2014", "01/2016", "Старший разработчик (backend)\n" +
-                                "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, " +
-                                "MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по " +
-                                "OAuth1, OAuth2, JWT SSO."))
+                        new Period("10/2014", "01/2016", "Старший разработчик (backend)",
+                                "Проектирование и разработка онлайн платформы управления проектами Wrike " +
+                                        "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
+                                        "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."))
         ));
 
         resume1.getSections().put(SectionType.EDUCATION, new OrganizationSection(
                 new Organization("Coursera", "https://www.coursera.org/course/progfun",
                         new Period("03/2013", "05/2013", "'Functional Programming Principles " +
-                                "in Scala' by Martin Odersky")),
+                                "in Scala' by Martin Odersky", "")),
                 new Organization("Санкт-Петербургский национальный исследовательский университет информационных " +
-                        "технологий, механики и оптики", "http://www.ifmo.ru/",
-                        new Period("09/1993", "07/1996", "Аспирантура (программист С, С++)"),
-                        new Period("09/1987", "07/1993", "Инженер (программист Fortran, C)"))
+                                "технологий, механики и оптики", "http://www.ifmo.ru/",
+                        new Period("09/1993", "07/1996", "Аспирантура (программист С, С++)", ""),
+                        new Period("09/1987", "07/1993", "Инженер (программист Fortran, C)", ""))
         ));
 
         /**

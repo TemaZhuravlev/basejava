@@ -3,19 +3,24 @@ package com.urise.webapp.model;
 import java.util.Objects;
 
 public class Period {
-    private String dateFrom;
-    private String dateTo;
-    private String description;
+    private final String dateFrom;
+    private final String dateTo;
+    private final String title;
+    private final String description;
 
-    public Period(String dateFrom, String dateTo, String description) {
+    public Period(String dateFrom, String dateTo, String title, String description) {
+        Objects.requireNonNull(dateFrom, "dateFrom must not be null");
+        Objects.requireNonNull(dateTo, "dateTo must not be null");
+        Objects.requireNonNull(title, "title must not be null");
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
+        this.title = title;
         this.description = description;
     }
 
     @Override
     public String toString() {
-        return dateFrom + "-" + dateTo + "\n" + description;
+        return dateFrom + "-" + dateTo + "\n" + title + description;
     }
 
     @Override
@@ -23,12 +28,12 @@ public class Period {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Period period = (Period) o;
-        return dateFrom.equals(period.dateFrom) && dateTo.equals(period.dateTo) && description.equals(period.description);
+        return dateFrom.equals(period.dateFrom) && dateTo.equals(period.dateTo) && title.equals(period.title) && Objects.equals(description, period.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(dateFrom, dateTo, description);
+        return Objects.hash(dateFrom, dateTo, title, description);
     }
 
     public String getDateFrom() {

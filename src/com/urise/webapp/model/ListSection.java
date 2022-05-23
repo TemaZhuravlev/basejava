@@ -10,6 +10,7 @@ public class ListSection extends AbstractSection {
     private final List<String> elements = new ArrayList<>();
 
     public ListSection(String... elements) {
+        Objects.requireNonNull(elements, "elements must not be null");
         this.elements.addAll(Arrays.asList(elements));
     }
 

@@ -10,6 +10,7 @@ public class OrganizationSection extends AbstractSection {
     private final List<Organization> organizations = new ArrayList<>();
 
     public OrganizationSection(Organization... organizations) {
+        Objects.requireNonNull(organizations, "organizations must not be null");
         this.organizations.addAll(Arrays.asList(organizations));
     }
 
