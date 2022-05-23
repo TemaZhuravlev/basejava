@@ -1,14 +1,16 @@
 package com.urise.webapp.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Period {
-    private final String dateFrom;
-    private final String dateTo;
+    private final LocalDate dateFrom;
+    private final LocalDate dateTo;
     private final String title;
     private final String description;
 
-    public Period(String dateFrom, String dateTo, String title, String description) {
+    public Period(LocalDate dateFrom, LocalDate dateTo, String title, String description) {
         Objects.requireNonNull(dateFrom, "dateFrom must not be null");
         Objects.requireNonNull(dateTo, "dateTo must not be null");
         Objects.requireNonNull(title, "title must not be null");
@@ -20,7 +22,7 @@ public class Period {
 
     @Override
     public String toString() {
-        return dateFrom + "-" + dateTo + "\n" + title + description;
+        return dateFrom.format(DateTimeFormatter.ofPattern("MM/YYYY")) + "-" + dateTo.format(DateTimeFormatter.ofPattern("MM/YYYY")) + "\n" + title + description;
     }
 
     @Override
@@ -36,11 +38,11 @@ public class Period {
         return Objects.hash(dateFrom, dateTo, title, description);
     }
 
-    public String getDateFrom() {
+    public LocalDate getDateFrom() {
         return dateFrom;
     }
 
-    public String getDateTo() {
+    public LocalDate getDateTo() {
         return dateTo;
     }
 

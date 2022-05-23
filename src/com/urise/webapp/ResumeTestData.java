@@ -1,7 +1,10 @@
 package com.urise.webapp;
 
 import com.urise.webapp.model.*;
+import com.urise.webapp.util.DateUtil;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Map;
 
 public class ResumeTestData {
@@ -52,10 +55,10 @@ public class ResumeTestData {
 
         resume1.getSections().put(SectionType.EXPERIENCE, new OrganizationSection(
                 new Organization("Java Online Projects", "http://javaops.ru/",
-                        new Period("10/2013", "Сейчас", "Автор проекта", "Создание, " +
+                        new Period(DateUtil.of(2013, Month.OCTOBER), LocalDate.now(), "Автор проекта", "Создание, " +
                                 "организация и проведение Java онлайн проектов и стажировок.")),
                 new Organization("Wrike", "https://www.wrike.com/",
-                        new Period("10/2014", "01/2016", "Старший разработчик (backend)",
+                        new Period(DateUtil.of(2014, Month.OCTOBER), DateUtil.of(2016, Month.JANUARY), "Старший разработчик (backend)",
                                 "Проектирование и разработка онлайн платформы управления проектами Wrike " +
                                         "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
                                         "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."))
@@ -63,12 +66,12 @@ public class ResumeTestData {
 
         resume1.getSections().put(SectionType.EDUCATION, new OrganizationSection(
                 new Organization("Coursera", "https://www.coursera.org/course/progfun",
-                        new Period("03/2013", "05/2013", "'Functional Programming Principles " +
+                        new Period(DateUtil.of(2013, Month.MARCH), DateUtil.of(2013, Month.MAY), "'Functional Programming Principles " +
                                 "in Scala' by Martin Odersky", "")),
                 new Organization("Санкт-Петербургский национальный исследовательский университет информационных " +
-                                "технологий, механики и оптики", "http://www.ifmo.ru/",
-                        new Period("09/1993", "07/1996", "Аспирантура (программист С, С++)", ""),
-                        new Period("09/1987", "07/1993", "Инженер (программист Fortran, C)", ""))
+                        "технологий, механики и оптики", "http://www.ifmo.ru/",
+                        new Period(DateUtil.of(1993, Month.SEPTEMBER), DateUtil.of(1996, Month.JULY), "Аспирантура (программист С, С++)", ""),
+                        new Period(DateUtil.of(1987,Month.SEPTEMBER), DateUtil.of(1993,Month.JULY), "Инженер (программист Fortran, C)", ""))
         ));
 
         /**
