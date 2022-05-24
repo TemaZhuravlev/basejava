@@ -8,28 +8,27 @@ import java.time.Month;
 import java.util.Map;
 
 public class ResumeTestData {
-    public static void main(String[] args) {
-        Resume resume1 = new Resume("uuid1", "Григорий Кислин");
+    public static Resume createResume(String uuid, String fullName) {
 
+        Resume resume = new Resume(uuid, fullName);
         /**
          * Block contacts
          */
-        resume1.getContacts().put(ContactType.PHONE_NUMBER, "+7(921) 855-0482");
-        resume1.getContacts().put(ContactType.SKYPE, "grigory.kislin");
-        resume1.getContacts().put(ContactType.E_MAIL, "gkislin@yandex.ru");
-        resume1.getContacts().put(ContactType.LINKEDIN, "Профиль LinkedIn");
-        resume1.getContacts().put(ContactType.GITHUB, "Профиль GitHub");
-        resume1.getContacts().put(ContactType.STACKOVERFLOW, "Профиль Stackoverflow");
-        resume1.getContacts().put(ContactType.HOME_PAGE, "Домашняя страница");
-
+        resume.getContacts().put(ContactType.PHONE_NUMBER, "+7(921) 855-0482");
+        resume.getContacts().put(ContactType.SKYPE, "grigory.kislin");
+        resume.getContacts().put(ContactType.E_MAIL, "gkislin@yandex.ru");
+        resume.getContacts().put(ContactType.LINKEDIN, "Профиль LinkedIn");
+        resume.getContacts().put(ContactType.GITHUB, "Профиль GitHub");
+        resume.getContacts().put(ContactType.STACKOVERFLOW, "Профиль Stackoverflow");
+        resume.getContacts().put(ContactType.HOME_PAGE, "Домашняя страница");
         /**
          * Block sections
          */
-        resume1.getSections().put(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного " +
+        resume.getSections().put(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного " +
                 "обучения по Java Web и Enterprise технологиям."));
-        resume1.getSections().put(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика," +
+        resume.getSections().put(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика," +
                 " креативность, инициативность. Пурист кода и архитектуры."));
-        resume1.getSections().put(SectionType.ACHIEVEMENT, new ListSection("Организация команды и успешная " +
+        resume.getSections().put(SectionType.ACHIEVEMENT, new ListSection("Организация команды и успешная " +
                 "реализация Java проектов для сторонних заказчиков: " +
                 "приложения автопарк на стеке Spring Cloud/микросервисы, система мониторинга показателей спортсменов " +
                 "на Spring Boot, участие в проекте МЭШ на Play-2, " +
@@ -41,7 +40,7 @@ public class ResumeTestData {
                 "Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. Интеграция с " +
                         "Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk."
         ));
-        resume1.getSections().put(SectionType.QUALIFICATIONS, new ListSection("JEE AS: GlassFish (v2.1, v3), " +
+        resume.getSections().put(SectionType.QUALIFICATIONS, new ListSection("JEE AS: GlassFish (v2.1, v3), " +
                 "OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2 ",
                 "Version control: Subversion, Git, Mercury, ClearCase, Perforce ",
                 "DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle, MySQL, SQLite, MS SQL, HSQLDB ",
@@ -52,8 +51,7 @@ public class ResumeTestData {
                         "JPA (Hibernate, EclipseLink), Guice, GWT(SmartGWT, ExtGWT/GXT), Vaadin, Jasperreports, " +
                         "Apache Commons, Eclipse SWT, JUnit, Selenium (htmlelements). "
         ));
-
-        resume1.getSections().put(SectionType.EXPERIENCE, new OrganizationSection(
+        resume.getSections().put(SectionType.EXPERIENCE, new OrganizationSection(
                 new Organization("Java Online Projects", "http://javaops.ru/",
                         new Period(DateUtil.of(2013, Month.OCTOBER), LocalDate.now(), "Автор проекта", "Создание, " +
                                 "организация и проведение Java онлайн проектов и стажировок.")),
@@ -63,17 +61,20 @@ public class ResumeTestData {
                                         "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
                                         "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."))
         ));
-
-        resume1.getSections().put(SectionType.EDUCATION, new OrganizationSection(
+        resume.getSections().put(SectionType.EDUCATION, new OrganizationSection(
                 new Organization("Coursera", "https://www.coursera.org/course/progfun",
                         new Period(DateUtil.of(2013, Month.MARCH), DateUtil.of(2013, Month.MAY), "'Functional Programming Principles " +
                                 "in Scala' by Martin Odersky", "")),
                 new Organization("Санкт-Петербургский национальный исследовательский университет информационных " +
                         "технологий, механики и оптики", "http://www.ifmo.ru/",
                         new Period(DateUtil.of(1993, Month.SEPTEMBER), DateUtil.of(1996, Month.JULY), "Аспирантура (программист С, С++)", ""),
-                        new Period(DateUtil.of(1987,Month.SEPTEMBER), DateUtil.of(1993,Month.JULY), "Инженер (программист Fortran, C)", ""))
+                        new Period(DateUtil.of(1987, Month.SEPTEMBER), DateUtil.of(1993, Month.JULY), "Инженер (программист Fortran, C)", ""))
         ));
+        return resume;
+    }
 
+    public static void main(String[] args) {
+        Resume resume1 = createResume("uuid1", "Гртгорий Кислин");
         /**
          * Print
          */
