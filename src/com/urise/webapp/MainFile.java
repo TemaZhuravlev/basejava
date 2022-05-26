@@ -12,8 +12,8 @@ public class MainFile {
             System.out.println("directory: " + file.getName());
             File[] list = file.listFiles();
             if (list != null) {
-                for (int i = 0; i < list.length; i++) {
-                    fileRecurs(list[i]);
+                for (File value : list) {
+                    fileRecurs(value);
                 }
             }
         }

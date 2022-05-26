@@ -26,20 +26,23 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     public void clear() {
         File[] list = directory.listFiles();
-        if(list != null) {
-            for (int i = 0; i < list.length; i++) {
-                deleteResume(list[i]);
+        if (list != null) {
+            for (File file : list) {
+                deleteResume(file);
             }
+        } else {
+            throw new StorageException("directory is null", directory.getName());
         }
     }
 
     @Override
     public int size() {
         File[] list = directory.listFiles();
-        if(list != null) {
+        if (list == null) {
+            throw new StorageException("directory is null", directory.getName());
+        } else {
             return list.length;
         }
-        return 0;
     }
 
     @Override
@@ -72,7 +75,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected void deleteResume(File file) {
-        if(!file.delete()){
+        if (!file.delete()) {
             throw new StorageException("file not delete", file.getName());
         }
     }
@@ -90,18 +93,15 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected List<Resume> doGetAllSorted() {
         File[] list = directory.listFiles();
-        if(list != null) {
+        if (list != null) {
             List<Resume> resumeList = new ArrayList<>();
-            for (int i = 0; i < list.length; i++) {
-                try {
-                    resumeList.add(doRead(list[i]));
-                } catch (IOException e) {
-                    throw new StorageException("IO error", list[i].getName(), e);
-                }
+            for (File file : list) {
+                resumeList.add(getResume(file));
             }
             return resumeList;
+        } else {
+            throw new StorageException("directory is null", directory.getName());
         }
-        return null;
     }
 
     protected abstract void doWrite(Resume r, File file) throws IOException;
