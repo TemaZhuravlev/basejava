@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class AbstractFileStorage extends AbstractStorage<File> {
-    private File directory;
+    private final File directory;
 
     protected AbstractFileStorage(File directory) {
         Objects.requireNonNull(directory, "directory must not be null");
@@ -26,15 +26,20 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     public void clear() {
         File[] list = directory.listFiles();
-        for (int i = 0; i < list.length; i++) {
-            list[i].delete();
+        if(list != null) {
+            for (int i = 0; i < list.length; i++) {
+                deleteResume(list[i]);
+            }
         }
     }
 
     @Override
     public int size() {
         File[] list = directory.listFiles();
-        return list.length;
+        if(list != null) {
+            return list.length;
+        }
+        return 0;
     }
 
     @Override
@@ -57,7 +62,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected void setResume(File file, Resume r) {
+    protected void updateResume(File file, Resume r) {
         try {
             doWrite(r, file);
         } catch (IOException e) {
@@ -67,7 +72,9 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected void deleteResume(File file) {
-        file.delete();
+        if(!file.delete()){
+            throw new StorageException("file not delete", file.getName());
+        }
     }
 
     @Override
@@ -83,15 +90,18 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected List<Resume> doGetAllSorted() {
         File[] list = directory.listFiles();
-        List<Resume> resumeList = new ArrayList<>();
-        for (int i = 0; i < list.length; i++) {
-            try {
-                resumeList.add(doRead(list[i]));
-            } catch (IOException e) {
-                throw new StorageException("IO error", list[i].getName(), e);
+        if(list != null) {
+            List<Resume> resumeList = new ArrayList<>();
+            for (int i = 0; i < list.length; i++) {
+                try {
+                    resumeList.add(doRead(list[i]));
+                } catch (IOException e) {
+                    throw new StorageException("IO error", list[i].getName(), e);
+                }
             }
+            return resumeList;
         }
-        return resumeList;
+        return null;
     }
 
     protected abstract void doWrite(Resume r, File file) throws IOException;

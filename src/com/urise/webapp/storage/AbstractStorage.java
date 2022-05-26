@@ -15,7 +15,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     public void update(Resume r) {
         LOG.info("Update " + r);
         SK index = getNotExistSearchKey(r.getUuid());
-        setResume(index, r);
+        updateResume(index, r);
     }
 
     public Resume get(String uuid) {
@@ -69,7 +69,7 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     protected abstract boolean isExist(SK index);
 
-    protected abstract void setResume(SK index, Resume r);
+    protected abstract void updateResume(SK index, Resume r);
 
     protected abstract void deleteResume(SK index);
 

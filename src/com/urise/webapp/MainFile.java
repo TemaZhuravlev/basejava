@@ -11,8 +11,10 @@ public class MainFile {
         if(file.isDirectory()){
             System.out.println("directory: " + file.getName());
             File[] list = file.listFiles();
-            for (int i = 0; i < list.length; i++) {
-                fileRecurs(list[i]);
+            if (list != null) {
+                for (int i = 0; i < list.length; i++) {
+                    fileRecurs(list[i]);
+                }
             }
         }
         else{

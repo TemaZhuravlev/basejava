@@ -44,7 +44,7 @@ public class MapResumeStorage extends AbstractStorage<Resume> {
     }
 
     @Override
-    protected void setResume(Resume resume, Resume r) {
+    protected void updateResume(Resume resume, Resume r) {
         String uuid = (resume).getUuid();
         storage.put(uuid, r);
     }

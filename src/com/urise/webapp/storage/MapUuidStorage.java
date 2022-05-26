@@ -43,7 +43,7 @@ public class MapUuidStorage extends AbstractStorage<String> {
     }
 
     @Override
-    protected void setResume(String index, Resume r) {
+    protected void updateResume(String index, Resume r) {
         storage.put(index, r);
     }
 
