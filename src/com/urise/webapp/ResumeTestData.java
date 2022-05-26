@@ -52,20 +52,21 @@ public class ResumeTestData {
                         "Apache Commons, Eclipse SWT, JUnit, Selenium (htmlelements). "
         ));
         resume.getSections().put(SectionType.EXPERIENCE, new OrganizationSection(
-                new Organization("Java Online Projects", "http://javaops.ru/",
+                new Organization("Java Online Projects", "Java Online Projects", "http://javaops.ru/",
                         new Period(DateUtil.of(2013, Month.OCTOBER), LocalDate.now(), "Автор проекта", "Создание, " +
                                 "организация и проведение Java онлайн проектов и стажировок.")),
-                new Organization("Wrike", "https://www.wrike.com/",
+                new Organization("Wrike", "Wrike", "https://www.wrike.com/",
                         new Period(DateUtil.of(2014, Month.OCTOBER), DateUtil.of(2016, Month.JANUARY), "Старший разработчик (backend)",
                                 "Проектирование и разработка онлайн платформы управления проектами Wrike " +
                                         "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
                                         "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."))
         ));
         resume.getSections().put(SectionType.EDUCATION, new OrganizationSection(
-                new Organization("Coursera", "https://www.coursera.org/course/progfun",
+                new Organization("Coursera", "Coursera", "https://www.coursera.org/course/progfun",
                         new Period(DateUtil.of(2013, Month.MARCH), DateUtil.of(2013, Month.MAY), "'Functional Programming Principles " +
                                 "in Scala' by Martin Odersky", "")),
                 new Organization("Санкт-Петербургский национальный исследовательский университет информационных " +
+                        "технологий, механики и оптики", "Санкт-Петербургский национальный исследовательский университет информационных " +
                         "технологий, механики и оптики", "http://www.ifmo.ru/",
                         new Period(DateUtil.of(1993, Month.SEPTEMBER), DateUtil.of(1996, Month.JULY), "Аспирантура (программист С, С++)", ""),
                         new Period(DateUtil.of(1987, Month.SEPTEMBER), DateUtil.of(1993, Month.JULY), "Инженер (программист Fortran, C)", ""))

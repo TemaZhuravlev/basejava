@@ -5,10 +5,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Organization {
+    private final String name;
     private final Link homePage;
     private final List<Period> periods = new ArrayList<>();
 
-    public Organization(String name, String url, Period... periods) {
+    public Organization(String name, String title, String url, Period... periods) {
+        this.name = name;
         this.homePage = new Link(name, url);
         this.periods.addAll(Arrays.asList(periods));
     }
@@ -19,7 +21,7 @@ public class Organization {
         for (Period element : periods) {
             temp.append(element.toString()).append("\n");
         }
-        return homePage.toString() + temp;
+        return name + " " + homePage.toString() + temp;
     }
 
     public List<Period> getPeriods() {
