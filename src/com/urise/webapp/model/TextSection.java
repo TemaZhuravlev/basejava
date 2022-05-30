@@ -10,6 +10,10 @@ public class TextSection extends AbstractSection {
         this.content = content;
     }
 
+    public String getContent() {
+        return content;
+    }
+
     @Override
     public String toString() {
         return content;
@@ -26,9 +30,5 @@ public class TextSection extends AbstractSection {
     @Override
     public int hashCode() {
         return Objects.hash(content);
-    }
-
-    public String getContent() {
-        return content;
     }
 }

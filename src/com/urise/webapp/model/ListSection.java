@@ -1,17 +1,23 @@
 package com.urise.webapp.model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class ListSection extends AbstractSection {
-
-    private final List<String> elements = new ArrayList<>();
+    private final List<String> elements;
 
     public ListSection(String... elements) {
+        this(Arrays.asList(elements));
+    }
+
+    public ListSection(List<String> elements) {
         Objects.requireNonNull(elements, "elements must not be null");
-        this.elements.addAll(Arrays.asList(elements));
+        this.elements = elements;
+    }
+
+    public List<String> getElements() {
+        return elements;
     }
 
     @Override
@@ -34,9 +40,5 @@ public class ListSection extends AbstractSection {
     @Override
     public int hashCode() {
         return Objects.hash(elements);
-    }
-
-    public List<String> getElements() {
-        return elements;
     }
 }

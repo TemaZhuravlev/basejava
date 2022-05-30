@@ -20,6 +20,18 @@ public class Period {
         this.description = description;
     }
 
+    public LocalDate getDateFrom() {
+        return dateFrom;
+    }
+
+    public LocalDate getDateTo() {
+        return dateTo;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     @Override
     public String toString() {
         return dateFrom.format(DateTimeFormatter.ofPattern("MM/YYYY")) + "-" + dateTo.format(DateTimeFormatter.ofPattern("MM/YYYY")) + "\n" + title + description;
@@ -36,17 +48,5 @@ public class Period {
     @Override
     public int hashCode() {
         return Objects.hash(dateFrom, dateTo, title, description);
-    }
-
-    public LocalDate getDateFrom() {
-        return dateFrom;
-    }
-
-    public LocalDate getDateTo() {
-        return dateTo;
-    }
-
-    public String getDescription() {
-        return description;
     }
 }

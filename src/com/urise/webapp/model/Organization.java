@@ -3,16 +3,27 @@ package com.urise.webapp.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Organization {
     private final String name;
     private final Link homePage;
-    private final List<Period> periods = new ArrayList<>();
+    private List<Period> periods = new ArrayList<>();
 
-    public Organization(String name, String title, String url, Period... periods) {
+    public Organization(String name, String url, Period... periods) {
+        this(name, new Link(name, url), Arrays.asList(periods));
+    }
+
+    public Organization(String name, Link homePage, List<Period> periods) {
+        Objects.requireNonNull(name, "name must not be null");
+        Objects.requireNonNull(periods, "periods must not be null");
         this.name = name;
-        this.homePage = new Link(name, url);
-        this.periods.addAll(Arrays.asList(periods));
+        this.homePage = homePage;
+        this.periods = periods;
+    }
+
+    public List<Period> getPeriods() {
+        return periods;
     }
 
     @Override
@@ -24,7 +35,16 @@ public class Organization {
         return name + " " + homePage.toString() + temp;
     }
 
-    public List<Period> getPeriods() {
-        return periods;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Organization that = (Organization) o;
+        return name.equals(that.name) && Objects.equals(homePage, that.homePage) && periods.equals(that.periods);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, homePage, periods);
     }
 }
