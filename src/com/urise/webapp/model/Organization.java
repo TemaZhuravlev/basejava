@@ -26,6 +26,14 @@ public class Organization {
         return periods;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public Link getHomePage() {
+        return homePage;
+    }
+
     @Override
     public String toString() {
         StringBuilder temp = new StringBuilder();

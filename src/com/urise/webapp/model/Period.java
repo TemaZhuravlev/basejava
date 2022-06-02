@@ -1,14 +1,28 @@
 package com.urise.webapp.model;
 
+
+
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+
+import static com.urise.webapp.util.DateUtil.NOW;
+import static com.urise.webapp.util.DateUtil.of;
 
 public class Period {
     private final LocalDate dateFrom;
     private final LocalDate dateTo;
     private final String title;
     private final String description;
+
+    public Period(int startYear, Month startMonth, String title, String description) {
+        this(of(startYear, startMonth), NOW, title, description);
+    }
+
+    public Period(int startYear, Month startMonth,int endYear, Month endMonth, String title, String description) {
+        this(of(startYear, startMonth), of(endYear, endMonth), title, description);
+    }
 
     public Period(LocalDate dateFrom, LocalDate dateTo, String title, String description) {
         Objects.requireNonNull(dateFrom, "dateFrom must not be null");
@@ -26,6 +40,10 @@ public class Period {
 
     public LocalDate getDateTo() {
         return dateTo;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public String getDescription() {

@@ -31,7 +31,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
                 deleteResume(file);
             }
         } else {
-            throw new StorageException("directory is null", directory.getName());
+            throw new StorageException("Directory is null", directory.getName());
         }
     }
 
@@ -39,7 +39,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     public int size() {
         File[] list = directory.listFiles();
         if (list == null) {
-            throw new StorageException("directory is null", directory.getName());
+            throw new StorageException("Directory is null", directory.getName());
         } else {
             return list.length;
         }
@@ -76,7 +76,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected void deleteResume(File file) {
         if (!file.delete()) {
-            throw new StorageException("file not delete", file.getName());
+            throw new StorageException("File not delete", file.getName());
         }
     }
 
@@ -100,7 +100,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
             }
             return resumeList;
         } else {
-            throw new StorageException("directory is null", directory.getName());
+            throw new StorageException("Directory is null", directory.getName());
         }
     }
 
