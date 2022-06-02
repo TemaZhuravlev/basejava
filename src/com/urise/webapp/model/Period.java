@@ -2,6 +2,7 @@ package com.urise.webapp.model;
 
 
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
@@ -10,7 +11,7 @@ import java.util.Objects;
 import static com.urise.webapp.util.DateUtil.NOW;
 import static com.urise.webapp.util.DateUtil.of;
 
-public class Period {
+public class Period implements Serializable {
     private final LocalDate dateFrom;
     private final LocalDate dateTo;
     private final String title;
