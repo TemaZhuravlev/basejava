@@ -2,7 +2,7 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.serialize.SerializeStrategy;
+import com.urise.webapp.storage.serialize.SerializeStrategy;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class FileStorage extends AbstractStorage<File> {
     private final File directory;
-    private SerializeStrategy serializeStrategy;
+    private final SerializeStrategy serializeStrategy;
 
     protected FileStorage(File directory, SerializeStrategy serializeStrategy) {
         this.serializeStrategy = serializeStrategy;
@@ -27,24 +27,15 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     public void clear() {
-        File[] list = directory.listFiles();
-        if (list != null) {
-            for (File file : list) {
-                deleteResume(file);
-            }
-        } else {
-            throw new StorageException("Directory is null", directory.getName());
+        for (File file : getListFiles()) {
+            deleteResume(file);
         }
     }
 
     @Override
     public int size() {
-        File[] list = directory.listFiles();
-        if (list == null) {
-            throw new StorageException("Directory is null", directory.getName());
-        } else {
-            return list.length;
-        }
+        return getListFiles().length;
+
     }
 
     @Override
@@ -94,15 +85,18 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     protected List<Resume> doGetAllSorted() {
+        List<Resume> resumeList = new ArrayList<>();
+        for (File file : getListFiles()) {
+            resumeList.add(getResume(file));
+        }
+        return resumeList;
+    }
+
+    private File[] getListFiles() {
         File[] list = directory.listFiles();
-        if (list != null) {
-            List<Resume> resumeList = new ArrayList<>();
-            for (File file : list) {
-                resumeList.add(getResume(file));
-            }
-            return resumeList;
-        } else {
+        if (list == null) {
             throw new StorageException("Directory is null", directory.getName());
         }
+        return list;
     }
 }

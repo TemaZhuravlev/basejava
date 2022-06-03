@@ -2,7 +2,7 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.serialize.SerializeStrategy;
+import com.urise.webapp.storage.serialize.SerializeStrategy;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,10 +11,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class PathStorage extends AbstractStorage<Path> {
     private final Path directory;
-    private SerializeStrategy serializeStrategy;
+    private final SerializeStrategy serializeStrategy;
 
     protected PathStorage(String dir, SerializeStrategy serializeStrategy) {
         this.serializeStrategy = serializeStrategy;
@@ -27,20 +28,12 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     public void clear() {
-        try {
-            Files.list(directory).forEach(this::deleteResume);
-        } catch (IOException e) {
-            throw new StorageException("Path delete error", null);
-        }
+        getListFiles().forEach(this::deleteResume);
     }
 
     @Override
     public int size() {
-        try {
-            return (int) Files.list(directory).count();
-        } catch (IOException e) {
-            throw new StorageException("Path size error", directory.getFileName().toString());
-        }
+        return (int) getListFiles().count();
     }
 
     @Override
@@ -78,9 +71,6 @@ public class PathStorage extends AbstractStorage<Path> {
         } catch (IOException e) {
             throw new StorageException("File delete error", path.getFileName().toString());
         }
-        if (Files.exists(path)) {
-            throw new StorageException("File not delete", path.getFileName().toString());
-        }
     }
 
     @Override
@@ -96,11 +86,15 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected List<Resume> doGetAllSorted() {
         List<Resume> resumeList = new ArrayList<>();
-        try {
-            Files.list(directory).forEach(element -> resumeList.add(getResume(element)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        getListFiles().forEach(element -> resumeList.add(getResume(element)));
         return resumeList;
+    }
+
+    private Stream<Path> getListFiles() {
+        try {
+            return Files.list(directory);
+        } catch (IOException e) {
+            throw new StorageException("Path for get list error", directory.getFileName().toString());
+        }
     }
 }
