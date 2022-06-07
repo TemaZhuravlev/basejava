@@ -69,7 +69,7 @@ public class PathStorage extends AbstractStorage<Path> {
         try {
             Files.delete(path);
         } catch (IOException e) {
-            throw new StorageException("File delete error", path.getFileName().toString());
+            throw new StorageException("File delete error", path.getFileName().toString(), e);
         }
     }
 
@@ -94,7 +94,7 @@ public class PathStorage extends AbstractStorage<Path> {
         try {
             return Files.list(directory);
         } catch (IOException e) {
-            throw new StorageException("Path for get list error", directory.getFileName().toString());
+            throw new StorageException("Path for get list error", directory.getFileName().toString(), e);
         }
     }
 }
