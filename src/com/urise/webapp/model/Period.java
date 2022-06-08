@@ -2,6 +2,11 @@ package com.urise.webapp.model;
 
 
 
+import com.urise.webapp.util.LocalDateAdapter;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
@@ -11,11 +16,17 @@ import java.util.Objects;
 import static com.urise.webapp.util.DateUtil.NOW;
 import static com.urise.webapp.util.DateUtil.of;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Period implements Serializable {
-    private final LocalDate dateFrom;
-    private final LocalDate dateTo;
-    private final String title;
-    private final String description;
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    private LocalDate dateFrom;
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    private LocalDate dateTo;
+    private String title;
+    private String description;
+
+    public Period() {
+    }
 
     public Period(int startYear, Month startMonth, String title, String description) {
         this(of(startYear, startMonth), NOW, title, description);
@@ -53,7 +64,8 @@ public class Period implements Serializable {
 
     @Override
     public String toString() {
-        return dateFrom.format(DateTimeFormatter.ofPattern("MM/YYYY")) + "-" + dateTo.format(DateTimeFormatter.ofPattern("MM/YYYY")) + "\n" + title + description;
+        return dateFrom.format(DateTimeFormatter.ofPattern("MM/YYYY")) + "-" +
+                dateTo.format(DateTimeFormatter.ofPattern("MM/YYYY")) + "\n" + title + description;
     }
 
     @Override
@@ -61,7 +73,10 @@ public class Period implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Period period = (Period) o;
-        return dateFrom.equals(period.dateFrom) && dateTo.equals(period.dateTo) && title.equals(period.title) && Objects.equals(description, period.description);
+        return dateFrom.equals(period.dateFrom) &&
+                dateTo.equals(period.dateTo) &&
+                title.equals(period.title) &&
+                Objects.equals(description, period.description);
     }
 
     @Override
