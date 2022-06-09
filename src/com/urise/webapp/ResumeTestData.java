@@ -72,7 +72,7 @@ public class ResumeTestData {
     }
 
     public static void main(String[] args) {
-        Resume resume1 = createResume("uuid1", "Гртгорий Кислин");
+        Resume resume1 = createResume("uuid1", "Григорий Кислин");
         /**
          * Print
          */
