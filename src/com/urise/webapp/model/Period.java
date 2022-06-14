@@ -1,7 +1,6 @@
 package com.urise.webapp.model;
 
 
-
 import com.urise.webapp.util.LocalDateAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -32,7 +31,7 @@ public class Period implements Serializable {
         this(of(startYear, startMonth), NOW, title, description);
     }
 
-    public Period(int startYear, Month startMonth,int endYear, Month endMonth, String title, String description) {
+    public Period(int startYear, Month startMonth, int endYear, Month endMonth, String title, String description) {
         this(of(startYear, startMonth), of(endYear, endMonth), title, description);
     }
 
@@ -43,7 +42,7 @@ public class Period implements Serializable {
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.title = title;
-        this.description = description;
+        this.description = description == null ? "" : description;
     }
 
     public LocalDate getDateFrom() {

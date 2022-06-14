@@ -5,8 +5,8 @@ import com.urise.webapp.model.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 public class DataStreamSerializer implements SerializeStrategy {
 
@@ -15,51 +15,56 @@ public class DataStreamSerializer implements SerializeStrategy {
         try (DataOutputStream dos = new DataOutputStream(os)) {
             dos.writeUTF(r.getUuid());
             dos.writeUTF(r.getFullName());
-            Map<ContactType, String> contacts = r.getContacts();
-            dos.writeInt(contacts.size());
-            for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
+            writeCollection(dos, r.getContacts().entrySet(), entry -> {
                 dos.writeUTF(entry.getKey().name());
                 dos.writeUTF(entry.getValue());
-            }
-            Map<SectionType, AbstractSection> sections = r.getSections();
-            dos.writeInt(sections.size());
-            for (Map.Entry<SectionType, AbstractSection> entry : sections.entrySet()) {
-                dos.writeUTF(entry.getKey().name());
-                switch (entry.getKey()) {
+            });
+            writeCollection(dos, r.getSections().entrySet(), section -> {
+                AbstractSection sectionValue = section.getValue();
+                dos.writeUTF(section.getKey().name());
+                switch (section.getKey()) {
                     case OBJECTIVE, PERSONAL -> {
-                        TextSection textSection = (TextSection) entry.getValue();
-                        dos.writeUTF(textSection.getContent());
+                        dos.writeUTF(((TextSection) sectionValue).getContent());
                     }
                     case ACHIEVEMENT, QUALIFICATIONS -> {
-                        ListSection listSection = (ListSection) entry.getValue();
-                        List<String> list = listSection.getElements();
-                        dos.writeInt(list.size());
-                        for (String str : list) {
-                            dos.writeUTF(str);
-                        }
+                        writeCollection(dos, ((ListSection) sectionValue).getElements(), dos::writeUTF);
                     }
                     case EXPERIENCE, EDUCATION -> {
-                        OrganizationSection organizationSection = (OrganizationSection) entry.getValue();
-                        List<Organization> organizationList = organizationSection.getOrganizations();
-                        dos.writeInt(organizationList.size());
-                        for (Organization organization : organizationList) {
-                            List<Period> organizationPeriods = organization.getPeriods();
-                            dos.writeInt(organizationPeriods.size());
-                            for (Period period : organizationPeriods) {
-                                writeLocalDate(dos, period.getDateFrom());
-                                writeLocalDate(dos, period.getDateTo());
-                                dos.writeUTF(period.getTitle());
-                                dos.writeUTF(period.getDescription());
-                            }
+                        writeCollection(dos, ((OrganizationSection) sectionValue).getOrganizations(), organization -> {
                             dos.writeUTF(organization.getName());
                             Link homePage = organization.getHomePage();
                             dos.writeUTF(homePage.getTitle());
                             dos.writeUTF(homePage.getUrl());
+                            writeCollection(dos, organization.getPeriods(), period -> {
+                                writeLocalDate(dos, period.getDateFrom());
+                                writeLocalDate(dos, period.getDateTo());
+                                dos.writeUTF(period.getTitle());
+                                dos.writeUTF(period.getDescription());
+                            });
 
-                        }
+                        });
                     }
                 }
-            }
+            });
+        }
+    }
+
+    private interface RuleWrite<T> {
+        void accept(T t) throws IOException;
+    }
+
+    private interface RuleReadElement {
+        void apply() throws IOException;
+    }
+
+    private interface RuleReadList<T> {
+        T get() throws IOException;
+    }
+
+    private <T> void writeCollection(DataOutputStream dos, Collection<T> collection, RuleWrite<T> ruleWrite) throws IOException {
+        dos.writeInt(collection.size());
+        for (T entry : collection) {
+            ruleWrite.accept(entry);
         }
     }
 
@@ -72,46 +77,48 @@ public class DataStreamSerializer implements SerializeStrategy {
         return LocalDate.of(dis.readInt(), dis.readInt(), 1);
     }
 
+    private void readElement(DataInputStream dis, RuleReadElement ruleReadElement) throws IOException {
+        int size = dis.readInt();
+        for (int i = 0; i < size; i++) {
+            ruleReadElement.apply();
+        }
+    }
+
+    private <T> List<T> readList(DataInputStream dis, RuleReadList<T> ruleReadList) throws IOException {
+        int size = dis.readInt();
+        List<T> list = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            list.add(ruleReadList.get());
+        }
+        return list;
+    }
+
     @Override
     public Resume doRead(InputStream is) throws IOException {
         try (DataInputStream dis = new DataInputStream(is)) {
             String uuid = dis.readUTF();
             String fullName = dis.readUTF();
             Resume resume = new Resume(uuid, fullName);
-            int size = dis.readInt();
-            for (int i = 0; i < size; i++) {
-                resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
-            }
-            int sizeSection = dis.readInt();
-            for (int i = 0; i < sizeSection; i++) {
+            readElement(dis, () -> resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
+            readElement(dis, () -> {
                 SectionType sectionType = SectionType.valueOf(dis.readUTF());
                 switch (sectionType) {
                     case OBJECTIVE, PERSONAL -> {
                         resume.addSection(sectionType, new TextSection(dis.readUTF()));
                     }
                     case ACHIEVEMENT, QUALIFICATIONS -> {
-                        List<String> elements = new ArrayList<>();
-                        int sizeElements = dis.readInt();
-                        for (int j = 0; j < sizeElements; j++) {
-                            elements.add(dis.readUTF());
-                        }
-                        resume.addSection(sectionType, new ListSection(elements));
+                        resume.addSection(sectionType, new ListSection(readList(dis, dis::readUTF)));
                     }
                     case EXPERIENCE, EDUCATION -> {
-                        List<Organization> organizationList = new ArrayList<>();
-                        int sizeOrganizations = dis.readInt();
-                        for (int k = 0; k < sizeOrganizations; k++) {
-                            List<Period> periodsList = new ArrayList<>();
-                            int sizePeriod = dis.readInt();
-                            for (int j = 0; j < sizePeriod; j++) {
-                                periodsList.add(new Period(readLocalDate(dis), readLocalDate(dis), dis.readUTF(), dis.readUTF()));
-                            }
-                            organizationList.add(new Organization(dis.readUTF(), new Link(dis.readUTF(), dis.readUTF()), periodsList));
-                        }
-                        resume.addSection(sectionType, new OrganizationSection(organizationList));
+                        resume.addSection(sectionType, new OrganizationSection(readList(dis, () ->
+                                new Organization(dis.readUTF(),
+                                        new Link(dis.readUTF(), dis.readUTF()), readList(dis, () ->
+                                        new Period(readLocalDate(dis), readLocalDate(dis), dis.readUTF(), dis.readUTF())
+                                ))
+                        )));
                     }
                 }
-            }
+            });
             return resume;
         }
     }
