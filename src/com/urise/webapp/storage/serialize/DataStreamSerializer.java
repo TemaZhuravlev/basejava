@@ -41,7 +41,6 @@ public class DataStreamSerializer implements SerializeStrategy {
                                 dos.writeUTF(period.getTitle());
                                 dos.writeUTF(period.getDescription());
                             });
-
                         });
                     }
                 }
