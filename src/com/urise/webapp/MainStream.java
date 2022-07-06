@@ -34,8 +34,7 @@ public class MainStream {
         return Arrays.stream(values)
                 .sorted()
                 .distinct()
-                .reduce((accumulator, element) -> accumulator * 10 + element)
-                .getAsInt();
+                .reduce(0, (accumulator, element) -> accumulator * 10 + element);
     }
 
     public static List<Integer> addOrEven(List<Integer> integers) {
