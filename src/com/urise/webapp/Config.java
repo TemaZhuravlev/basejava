@@ -21,6 +21,7 @@ public class Config {
         try (InputStream is = new FileInputStream(PROPS)) {
             props.load(is);
             storageDir = new File(props.getProperty("storage.dir"));
+
         } catch (IOException e) {
             throw new IllegalStateException("Invalid config file " + PROPS.getAbsolutePath());
         }
@@ -28,5 +29,9 @@ public class Config {
 
     public File getStorageDir() {
         return storageDir;
+    }
+
+    public Properties getProps() {
+        return props;
     }
 }
