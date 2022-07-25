@@ -2,7 +2,6 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.sql.ConnectionFactory;
 import com.urise.webapp.util.SqlHelper;
 
 import java.sql.DriverManager;
@@ -12,13 +11,11 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class SqlStorage implements Storage {
-    public final ConnectionFactory connectionFactory;
     public final SqlHelper sqlHelper;
     private static final Logger LOG = Logger.getLogger(SqlStorage.class.getName());
 
     public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
-        connectionFactory = () -> DriverManager.getConnection(dbUrl, dbUser, dbPassword);
-        sqlHelper = new SqlHelper(connectionFactory);
+        sqlHelper = new SqlHelper(() -> DriverManager.getConnection(dbUrl, dbUser, dbPassword));
     }
 
     @Override
@@ -28,7 +25,7 @@ public class SqlStorage implements Storage {
                 ps -> {
                     ResultSet rs = ps.executeQuery();
                     if (!rs.next()) {
-                        throw new NotExistStorageException("Not value count");
+                        return 0;
                     }
                     return rs.getInt("total");
                 });
@@ -97,7 +94,7 @@ public class SqlStorage implements Storage {
     @Override
     public List<Resume> getAllSorted() {
         LOG.info("getAllSorted");
-        return sqlHelper.executeQuery("SELECT * FROM resume",
+        return sqlHelper.executeQuery("SELECT * FROM resume ORDER BY full_name, uuid",
                 ps -> {
                     ResultSet rs = ps.executeQuery();
                     List<Resume> list = new ArrayList<>();
