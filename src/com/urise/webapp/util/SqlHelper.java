@@ -3,7 +3,6 @@ package com.urise.webapp.util;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.sql.ConnectionFactory;
-import org.postgresql.util.PSQLException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,9 +19,10 @@ public class SqlHelper {
         try (Connection conn = connectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
             return sqlProcessor.execute(ps);
-        } catch (PSQLException e) {
-            throw new ExistStorageException("uuid exist");
         } catch (SQLException e) {
+            if(e.getSQLState().equals("23505")) {
+                throw new ExistStorageException("uuid exist");
+            }
             throw new StorageException(e);
         }
     }
