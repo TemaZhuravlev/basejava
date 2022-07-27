@@ -1,1 +1,7 @@
-{"uuid":"uuid1","fullName":"Ivanov Ivan","contacts":{},"sections":{}}
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<resume>
+    <uuid>uuid1</uuid>
+    <fullName>Ivanov Ivan</fullName>
+    <contacts/>
+    <sections/>
+</resume>

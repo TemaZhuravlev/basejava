@@ -1,6 +1,7 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.Config;
+import com.urise.webapp.ResumeTestData;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
@@ -10,6 +11,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertTrue;
 
@@ -17,22 +19,25 @@ public abstract class AbstractStorageTest {
     protected static final File STORAGE_DIR = Config.get().getStorageDir();
     protected Storage storage;
 
-    private static final String UUID_1 = "uuid1";
-    private static final String UUID_2 = "uuid2";
-    private static final String UUID_3 = "uuid3";
+        private static final String UUID_1 = UUID.randomUUID().toString();
+    private static final String UUID_2 = UUID.randomUUID().toString();
+    private static final String UUID_3 = UUID.randomUUID().toString();
+//    private static final String UUID_1 = "uuid1";
+//    private static final String UUID_2 = "uuid2";
+//    private static final String UUID_3 = "uuid3";
     private static final String DUMMY = "dummy";
 
     private static final String FULL_NAME_1 = "Ivanov Ivan";
     private static final String FULL_NAME_2 = "Petrov Petr";
     private static final String FULL_NAME_3 = "Petrov Petr";
 
-//    protected static final Resume RESUME_1 = ResumeTestData.createResume(UUID_1,FULL_NAME_1);
-//    protected static final Resume RESUME_2 = ResumeTestData.createResume(UUID_2,FULL_NAME_2);
-//    protected static final Resume RESUME_3 = ResumeTestData.createResume(UUID_3,FULL_NAME_3);
+    protected static final Resume RESUME_1 = ResumeTestData.createResume(UUID_1, FULL_NAME_1);
+    protected static final Resume RESUME_2 = ResumeTestData.createResume(UUID_2, FULL_NAME_2);
+    protected static final Resume RESUME_3 = ResumeTestData.createResume(UUID_3, FULL_NAME_3);
 
-    protected static final Resume RESUME_1 = new Resume(UUID_1,FULL_NAME_1);
-    protected static final Resume RESUME_2 = new Resume(UUID_2,FULL_NAME_2);
-    protected static final Resume RESUME_3 = new Resume(UUID_3,FULL_NAME_3);
+//    protected static final Resume RESUME_1 = new Resume(UUID_1,FULL_NAME_1);
+//    protected static final Resume RESUME_2 = new Resume(UUID_2,FULL_NAME_2);
+//    protected static final Resume RESUME_3 = new Resume(UUID_3,FULL_NAME_3);
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
