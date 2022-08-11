@@ -10,19 +10,19 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractStorageTest {
     protected static final File STORAGE_DIR = Config.get().getStorageDir();
     protected Storage storage;
 
-        private static final String UUID_1 = UUID.randomUUID().toString();
+    private static final String UUID_1 = UUID.randomUUID().toString();
     private static final String UUID_2 = UUID.randomUUID().toString();
     private static final String UUID_3 = UUID.randomUUID().toString();
-//    private static final String UUID_1 = "uuid1";
+    //    private static final String UUID_1 = "uuid1";
 //    private static final String UUID_2 = "uuid2";
 //    private static final String UUID_3 = "uuid3";
     private static final String DUMMY = "dummy";
@@ -127,8 +127,8 @@ public abstract class AbstractStorageTest {
     public void getAllSorted() {
         List<Resume> allResume = storage.getAllSorted();
         Assert.assertEquals(storage.size(), allResume.size());
-        checkGet(RESUME_1, allResume.get(0).getUuid());
-        checkGet(RESUME_2, allResume.get(1).getUuid());
-        checkGet(RESUME_3, allResume.get(2).getUuid());
+        List<Resume> sortedResumes = Arrays.asList(RESUME_1, RESUME_2, RESUME_3);
+        sortedResumes.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
+        assertEquals(sortedResumes, allResume);
     }
 }

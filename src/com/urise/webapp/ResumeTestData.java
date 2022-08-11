@@ -2,7 +2,6 @@ package com.urise.webapp;
 
 import com.urise.webapp.model.*;
 
-import java.time.Month;
 import java.util.Map;
 
 public class ResumeTestData {
@@ -49,25 +48,25 @@ public class ResumeTestData {
                         "JPA (Hibernate, EclipseLink), Guice, GWT(SmartGWT, ExtGWT/GXT), Vaadin, Jasperreports, " +
                         "Apache Commons, Eclipse SWT, JUnit, Selenium (htmlelements). "
         ));
-        resume.getSections().put(SectionType.EXPERIENCE, new OrganizationSection(
-                new Organization("Java Online Projects", "http://javaops.ru/",
-                        new Period(2013, Month.OCTOBER, "Автор проекта", "Создание, " +
-                                "организация и проведение Java онлайн проектов и стажировок.")),
-                new Organization("Wrike", "https://www.wrike.com/",
-                        new Period(2014, Month.OCTOBER, 2016, Month.JANUARY, "Старший разработчик (backend)",
-                                "Проектирование и разработка онлайн платформы управления проектами Wrike " +
-                                        "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
-                                        "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."))
-        ));
-        resume.getSections().put(SectionType.EDUCATION, new OrganizationSection(
-                new Organization("Coursera", "https://www.coursera.org/course/progfun",
-                        new Period(2013, Month.MARCH, 2013, Month.MAY, "'Functional Programming Principles " +
-                                "in Scala' by Martin Odersky", "")),
-                new Organization("Санкт-Петербургский национальный исследовательский университет информационных " +
-                        "технологий, механики и оптики", "http://www.ifmo.ru/",
-                        new Period(1993, Month.SEPTEMBER, 1996, Month.JULY, "Аспирантура (программист С, С++)", ""),
-                        new Period(1987, Month.SEPTEMBER, 1993, Month.JULY, "Инженер (программист Fortran, C)", ""))
-        ));
+//        resume.getSections().put(SectionType.EXPERIENCE, new OrganizationSection(
+//                new Organization("Java Online Projects", "http://javaops.ru/",
+//                        new Period(2013, Month.OCTOBER, "Автор проекта", "Создание, " +
+//                                "организация и проведение Java онлайн проектов и стажировок.")),
+//                new Organization("Wrike", "https://www.wrike.com/",
+//                        new Period(2014, Month.OCTOBER, 2016, Month.JANUARY, "Старший разработчик (backend)",
+//                                "Проектирование и разработка онлайн платформы управления проектами Wrike " +
+//                                        "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
+//                                        "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."))
+//        ));
+//        resume.getSections().put(SectionType.EDUCATION, new OrganizationSection(
+//                new Organization("Coursera", "https://www.coursera.org/course/progfun",
+//                        new Period(2013, Month.MARCH, 2013, Month.MAY, "'Functional Programming Principles " +
+//                                "in Scala' by Martin Odersky", "")),
+//                new Organization("Санкт-Петербургский национальный исследовательский университет информационных " +
+//                        "технологий, механики и оптики", "http://www.ifmo.ru/",
+//                        new Period(1993, Month.SEPTEMBER, 1996, Month.JULY, "Аспирантура (программист С, С++)", ""),
+//                        new Period(1987, Month.SEPTEMBER, 1993, Month.JULY, "Инженер (программист Fortran, C)", ""))
+//        ));
         return resume;
     }
 
