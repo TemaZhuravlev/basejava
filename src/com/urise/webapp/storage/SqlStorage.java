@@ -6,10 +6,7 @@ import com.urise.webapp.model.Resume;
 import com.urise.webapp.sql.SqlHelper;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class SqlStorage implements Storage {
@@ -100,7 +97,7 @@ public class SqlStorage implements Storage {
                 });
     }
 
-    @Override
+        @Override
     public List<Resume> getAllSorted() {
         LOG.info("getAllSorted");
         return sqlHelper.executeQuery("SELECT * FROM resume r " +
@@ -108,7 +105,7 @@ public class SqlStorage implements Storage {
                         "ORDER BY full_name, uuid",
                 ps -> {
                     ResultSet rs = ps.executeQuery();
-                    Map<String, Resume> map = new HashMap<>();
+                    Map<String, Resume> map = new LinkedHashMap<>();
                     while (rs.next()) {
                         String uuid = rs.getString("uuid");
                         if(map.get(uuid) == null){
@@ -121,6 +118,30 @@ public class SqlStorage implements Storage {
                     return new ArrayList<>(map.values());
                 });
     }
+
+//    @Override
+//    public List<Resume> getAllSorted() {
+//        LOG.info("getAllSorted");
+//        return sqlHelper.transactionalExecute(conn -> {
+//            Map<String, Resume> map = new LinkedHashMap<>();
+//            try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM resume ORDER BY full_name, uuid")) {
+//                ResultSet rs = ps.executeQuery();
+//                while (rs.next()){
+//                    map.put(rs.getString("uuid"), new Resume(rs.getString("uuid"), rs.getString("full_name")));
+//                }
+//            }
+//            try(PreparedStatement ps = conn.prepareStatement("SELECT * FROM contact ORDER BY resume_uuid")){
+//                ResultSet rs = ps.executeQuery();
+//                while (rs.next()){
+//                    if(map.get(rs.getString("resume_uuid")) != null){
+//                        Resume r = map.get(rs.getString("resume_uuid"));
+//                        addContact(rs, r);
+//                    }
+//                }
+//            }
+//            return new ArrayList<>(map.values());
+//        });
+//    }
 
     private void addContact(ResultSet rs, Resume r) throws SQLException {
         String value = rs.getString("value");
