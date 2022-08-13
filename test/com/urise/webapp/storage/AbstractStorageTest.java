@@ -22,7 +22,7 @@ public abstract class AbstractStorageTest {
     private static final String UUID_1 = UUID.randomUUID().toString();
     private static final String UUID_2 = UUID.randomUUID().toString();
     private static final String UUID_3 = UUID.randomUUID().toString();
-    //    private static final String UUID_1 = "uuid1";
+//    private static final String UUID_1 = "uuid1";
 //    private static final String UUID_2 = "uuid2";
 //    private static final String UUID_3 = "uuid3";
     private static final String DUMMY = "dummy";
