@@ -67,6 +67,12 @@ public class Period implements Serializable {
                 dateTo.format(DateTimeFormatter.ofPattern("MM/YYYY")) + "\n" + title + description;
     }
 
+    public String toHtml() {
+        return "<div class='period-position'><div class='period'>" + dateFrom.format(DateTimeFormatter.ofPattern("MM/YYYY")) +
+                "-" + dateTo.format(DateTimeFormatter.ofPattern("MM/YYYY")) + "</div>"
+                + "<div class='position'>" + title + "</div></div>" + "<div class='description'>" + description + "</div>";
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -31,11 +31,11 @@ public abstract class AbstractStorageTest {
     private static final String FULL_NAME_2 = "Petrov Petr";
     private static final String FULL_NAME_3 = "Petrov Petr";
 
-    protected static final Resume RESUME_1 = ResumeTestData.createResume(UUID_1, FULL_NAME_1);
+//    protected static final Resume RESUME_1 = ResumeTestData.createResume(UUID_1, FULL_NAME_1);
     protected static final Resume RESUME_2 = ResumeTestData.createResume(UUID_2, FULL_NAME_2);
     protected static final Resume RESUME_3 = ResumeTestData.createResume(UUID_3, FULL_NAME_3);
 
-//    protected static final Resume RESUME_1 = new Resume(UUID_1,FULL_NAME_1);
+    protected static final Resume RESUME_1 = new Resume(UUID_1,FULL_NAME_1);
 //    protected static final Resume RESUME_2 = new Resume(UUID_2,FULL_NAME_2);
 //    protected static final Resume RESUME_3 = new Resume(UUID_3,FULL_NAME_3);
 

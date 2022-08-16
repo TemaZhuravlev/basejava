@@ -38,6 +38,15 @@ public class OrganizationSection extends AbstractSection {
     }
 
     @Override
+    public String toHtml() {
+        StringBuilder temp = new StringBuilder();
+        for (Organization element : organizations) {
+            temp.append(element.toHtml());
+        }
+        return "<div class='section-wrapper'>" + temp + "</div>";
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

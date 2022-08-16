@@ -35,6 +35,15 @@ public class ListSection extends AbstractSection {
     }
 
     @Override
+    public String toHtml() {
+        StringBuilder temp = new StringBuilder();
+        for (String element : elements) {
+            temp.append("<li>").append(element).append("</li>");
+        }
+        return "<ul class='list'>" + temp + "</ul>";
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

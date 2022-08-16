@@ -1,24 +1,146 @@
 header {
-    background: none repeat scroll 0 0 #A6C9E2;
+    background: none repeat scroll 0 0 #c5e5fc;
     color: #2E6E9E;
     font-size: 20px;
-    padding: 5px 20px;
+    padding: 10px 0px;
+}
+
+header a, footer a {
+    margin: 0 0 0 25%;
+    color: #2E6E9E;
+    text-decoration: none;
+}
+
+section {
+    font-size: 18px;
+    min-width: 610px;
+    width: 50%;
+    margin: 0 0 0 25%;
 }
 
 footer {
-    background: none repeat scroll 0 0 #A6C9E2;
+    background: none repeat scroll 0 0 #c5e5fc;
     color: #2E6E9E;
     font-size: 20px;
-    padding: 5px 20px;
+    padding: 10px 0px;
     margin: 20px 0;
 }
+
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
 }
 
 td, th {
-    border: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
     text-align: left;
     padding: 10px;
+}
+
+dl {
+    background: none repeat scroll 0 0 #FAFAFA;
+    margin: 8px 0;
+    padding: 0;
+}
+
+dt {
+    display: inline-block;
+    width: 170px;
+}
+
+dd {
+    display: inline-block;
+    margin-left: 8px;
+    vertical-align: top;
+}
+
+h2 {
+    margin: 15px 0 10px;
+}
+
+h3 {
+    margin: 35px 0 5px;
+    font-size: 22px;
+}
+
+li {
+    margin: 15px 0;
+}
+
+a[href^="skype:"] {
+    padding-left: 20px !important;
+    background: url(../img/skype.png) no-repeat center left;
+}
+
+a[href^="mailto:"] {
+    padding-left: 20px !important;
+    background: url(../img/email.png) no-repeat center left;
+}
+
+a[href^="https://stackoverflow.com"] {
+    padding-left: 20px !important;
+    background: url(../img/so.png) no-repeat center left;
+}
+
+a[href^="https://www.linkedin.com"] {
+    padding-left: 20px !important;
+    background: url(../img/lin.png) no-repeat center left;
+}
+
+a[href*="github."] {
+    padding-left: 20px !important;
+    background: url(../img/gh.png) no-repeat center left;
+}
+
+.contacts {
+    font-weight: 300;
+    line-height: 30px;
+    margin-top: 21px;
+}
+
+section a {
+    color: #347fb7;
+    text-decoration: none;
+}
+
+.section-wrapper {
+    margin-bottom: 60px;
+}
+
+.organization {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 30px;
+    margin-left: 207px;
+    padding-top: 30px;
+}
+
+.organization a {
+    color: #347fb7;
+    text-decoration: none;
+}
+
+.period-position {
+    display: flex;
+    margin-top: 10px;
+}
+
+.period {
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 25px;
+    min-width: 207px;
+}
+
+.position {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 25px;
+}
+
+.description {
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 25px;
+    margin: 35px 0 0 207px;
 }

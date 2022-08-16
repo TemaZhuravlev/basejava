@@ -47,9 +47,17 @@ public class Organization implements Serializable {
     public String toString() {
         StringBuilder temp = new StringBuilder();
         for (Period element : periods) {
-            temp.append(element.toString()).append("\n");
+            temp.append(element.toString()).append("<br/>");
         }
         return name + " " + homePage.toString() + temp;
+    }
+
+    public String toHtml() {
+        StringBuilder temp = new StringBuilder();
+        for (Period element : periods) {
+            temp.append(element.toHtml());
+        }
+        return "<div class='organization'>" + homePage.toHtml() + name + "</a></div>" + temp;
     }
 
     @Override

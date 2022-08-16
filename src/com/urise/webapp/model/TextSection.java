@@ -25,6 +25,11 @@ public class TextSection extends AbstractSection {
     }
 
     @Override
+    public String toHtml() {
+        return "<div class='" + getClass().getSimpleName().toLowerCase() + "'>" + content + "</div>";
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
