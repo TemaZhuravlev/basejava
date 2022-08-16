@@ -21,19 +21,20 @@ section {
 footer {
     background: none repeat scroll 0 0 #c5e5fc;
     color: #2E6E9E;
-    font-size: 20px;
+    font-size: 14px;
     padding: 10px 0px;
     margin: 20px 0;
 }
 
 table {
+    width: 100%;
     font-family: arial, sans-serif;
     border-collapse: collapse;
 }
 
 td, th {
     border-bottom: 1px solid #dddddd;
-    text-align: left;
+    text-align: center;
     padding: 10px;
 }
 
@@ -143,4 +144,31 @@ section a {
     font-size: 18px;
     line-height: 25px;
     margin: 35px 0 0 207px;
+}
+
+.add-resume-title {
+    font-family: Roboto, serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    width: 70px;
+    margin-left: 13px;
+    display: block;
+    color: #347fb7;
+}
+
+.text-anchor {
+    text-decoration: none;
+}
+
+.no-underline-anchor {
+    text-decoration: none;
+}
+
+.add-resume {
+    height: 100px;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: end;
 }

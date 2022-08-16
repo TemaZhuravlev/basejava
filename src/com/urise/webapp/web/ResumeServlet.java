@@ -58,7 +58,8 @@ public class ResumeServlet extends HttpServlet {
         String uuid = request.getParameter("uuid");
         String fullName = request.getParameter("fullName");
         Resume r;
-        if (uuid == null || uuid.trim().length() == 0) {
+        boolean isEmptyUuid = uuid == null || uuid.trim().length() == 0;
+        if (isEmptyUuid) {
             r = new Resume(fullName);
         } else {
             r = sqlStorage.get(uuid);
@@ -88,7 +89,7 @@ public class ResumeServlet extends HttpServlet {
                 r.getSections().remove(type);
             }
         }
-        if (uuid == null || uuid.trim().length() == 0) {
+        if (isEmptyUuid) {
             sqlStorage.save(r);
         } else {
             sqlStorage.update(r);
