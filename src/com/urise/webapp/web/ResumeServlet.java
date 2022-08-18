@@ -45,10 +45,10 @@ public class ResumeServlet extends HttpServlet {
                 break;
             case "edit":
                 r = sqlStorage.get(uuid);
-                if(r.getSection(SectionType.EXPERIENCE) == null){
+                if (r.getSection(SectionType.EXPERIENCE) == null) {
                     r.addSection(SectionType.EXPERIENCE, OrganizationSection.EMPTY);
                 }
-                if(r.getSection(SectionType.EDUCATION) == null){
+                if (r.getSection(SectionType.EDUCATION) == null) {
                     r.addSection(SectionType.EDUCATION, OrganizationSection.EMPTY);
                 }
                 break;
@@ -105,10 +105,10 @@ public class ResumeServlet extends HttpServlet {
                         List<Organization> organizationList = new ArrayList<>();
                         for (int i = 0; i < names.length; i++) {
                             Link link = new Link(names[i], urls[i]);
-                            String[] datesFrom = request.getParameterValues(type.name() + "dateFrom"+ i);
-                            String[] datesTo = request.getParameterValues(type.name() + "dateTo"+ i);
-                            String[] titles = request.getParameterValues(type.name() + "title"+ i);
-                            String[] descriptions = request.getParameterValues(type.name() + "description"+ i);
+                            String[] datesFrom = request.getParameterValues(type.name() + "dateFrom" + i);
+                            String[] datesTo = request.getParameterValues(type.name() + "dateTo" + i);
+                            String[] titles = request.getParameterValues(type.name() + "title" + i);
+                            String[] descriptions = request.getParameterValues(type.name() + "description" + i);
                             List<Period> periods = new ArrayList<>();
                             for (int j = 0; j < datesFrom.length; j++) {
                                 periods.add(new Period(parseDate(datesFrom[j]), parseDate(datesTo[j]), titles[j], descriptions[j]));
@@ -131,7 +131,7 @@ public class ResumeServlet extends HttpServlet {
     }
 
     private LocalDate parseDate(String date) {
-        if(date == null || date.trim().length() == 0) return DateUtil.EMPTY;
+        if (date == null || date.trim().length() == 0) return DateUtil.EMPTY;
         int[] ints = Arrays.stream((date.split("-")))
                 .mapToInt(a -> Integer.parseInt(a))
                 .toArray();

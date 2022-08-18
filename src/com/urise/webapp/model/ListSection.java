@@ -27,12 +27,11 @@ public class ListSection extends AbstractSection {
 
     @Override
     public String toString() {
-        return String.join("\n", elements);
-//        StringBuilder temp = new StringBuilder();
-//        for (String element : elements) {
-//            temp.append(element).append("\n");
-//        }
-//        return temp.toString();
+        StringBuilder temp = new StringBuilder();
+        for (String element : elements) {
+            temp.append(element).append("\n");
+        }
+        return temp.toString();
     }
 
     @Override
