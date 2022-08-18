@@ -3,6 +3,7 @@ package com.urise.webapp.web;
 import com.urise.webapp.Config;
 import com.urise.webapp.model.*;
 import com.urise.webapp.storage.Storage;
+import com.urise.webapp.util.DateUtil;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,11 +40,22 @@ public class ResumeServlet extends HttpServlet {
                 sqlStorage.delete(uuid);
                 response.sendRedirect("resume");
                 return;
-            case "view", "edit":
+            case "view":
                 r = sqlStorage.get(uuid);
+                break;
+            case "edit":
+                r = sqlStorage.get(uuid);
+                if(r.getSection(SectionType.EXPERIENCE) == null){
+                    r.addSection(SectionType.EXPERIENCE, OrganizationSection.EMPTY);
+                }
+                if(r.getSection(SectionType.EDUCATION) == null){
+                    r.addSection(SectionType.EDUCATION, OrganizationSection.EMPTY);
+                }
                 break;
             case "add":
                 r = new Resume();
+                r.addSection(SectionType.EXPERIENCE, OrganizationSection.EMPTY);
+                r.addSection(SectionType.EDUCATION, OrganizationSection.EMPTY);
                 break;
             default:
                 throw new IllegalArgumentException("Action " + action + " is illegal");
@@ -81,8 +95,27 @@ public class ResumeServlet extends HttpServlet {
                         r.addSection(type, new TextSection(value));
                     }
                     case "ACHIEVEMENT", "QUALIFICATIONS" -> {
-                        List<String> list = Arrays.asList(value.split("\r\n"));
+                        List<String> list = new ArrayList<>(Arrays.asList(value.split("\r\n")));
+                        list.removeIf(String::isEmpty);
                         r.addSection(type, new ListSection(list));
+                    }
+                    case "EXPERIENCE", "EDUCATION" -> {
+                        String[] names = request.getParameterValues(type.name());
+                        String[] urls = request.getParameterValues(type.name() + "url");
+                        List<Organization> organizationList = new ArrayList<>();
+                        for (int i = 0; i < names.length; i++) {
+                            Link link = new Link(names[i], urls[i]);
+                            String[] datesFrom = request.getParameterValues(type.name() + "dateFrom"+ i);
+                            String[] datesTo = request.getParameterValues(type.name() + "dateTo"+ i);
+                            String[] titles = request.getParameterValues(type.name() + "title"+ i);
+                            String[] descriptions = request.getParameterValues(type.name() + "description"+ i);
+                            List<Period> periods = new ArrayList<>();
+                            for (int j = 0; j < datesFrom.length; j++) {
+                                periods.add(new Period(parseDate(datesFrom[j]), parseDate(datesTo[j]), titles[j], descriptions[j]));
+                            }
+                            organizationList.add(new Organization(names[i], link, periods));
+                        }
+                        r.addSection(type, new OrganizationSection(organizationList));
                     }
                 }
             } else {
@@ -95,5 +128,13 @@ public class ResumeServlet extends HttpServlet {
             sqlStorage.update(r);
         }
         response.sendRedirect("resume");
+    }
+
+    private LocalDate parseDate(String date) {
+        if(date == null || date.trim().length() == 0) return DateUtil.EMPTY;
+        int[] ints = Arrays.stream((date.split("-")))
+                .mapToInt(a -> Integer.parseInt(a))
+                .toArray();
+        return LocalDate.of(ints[0], ints[1], ints[2]);
     }
 }

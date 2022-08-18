@@ -1,6 +1,7 @@
 package com.urise.webapp.model;
 
 
+import com.urise.webapp.util.DateUtil;
 import com.urise.webapp.util.LocalDateAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -17,6 +18,7 @@ import static com.urise.webapp.util.DateUtil.of;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Period implements Serializable {
+    public static final Period EMPTY = new Period();
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate dateFrom;
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
@@ -68,9 +70,16 @@ public class Period implements Serializable {
     }
 
     public String toHtml() {
-        return "<div class='period-position'><div class='period'>" + dateFrom.format(DateTimeFormatter.ofPattern("MM/YYYY")) +
-                "-" + dateTo.format(DateTimeFormatter.ofPattern("MM/YYYY")) + "</div>"
+        return "<div class='period-position'><div class='period'>"
+                + dateConvert(dateFrom) + "-" + dateConvert(dateTo) + "</div>"
                 + "<div class='position'>" + title + "</div></div>" + "<div class='description'>" + description + "</div>";
+    }
+
+    private String dateConvert(LocalDate date) {
+        if (!date.equals(DateUtil.EMPTY)) {
+            return date.equals(DateUtil.NOW) ? "Сейчас" : date.format(DateTimeFormatter.ofPattern("MM/YYYY"));
+        }
+        return "";
     }
 
     @Override

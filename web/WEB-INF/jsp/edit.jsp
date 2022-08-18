@@ -29,6 +29,7 @@
         </c:forEach>
         <h3>Секции:</h3>
         <c:forEach var="type" items="<%=SectionType.values()%>">
+            <c:set var="section" value="${resume.getSection(type)}"/>
             <dl>
                 <c:choose>
                     <c:when test="${type.name() == 'OBJECTIVE'}">
@@ -51,6 +52,50 @@
                         <dd><textarea rows="10" cols="45"
                                       name="${type.name()}">${resume.getSection(type).toString()}</textarea></dd>
                     </c:when>
+
+                    <c:when test="${type.name() == 'EXPERIENCE' || type.name() == 'EDUCATION'}">
+                        <h3>${type.title}</h3>
+                        <c:forEach var="organization" items="${section.getOrganizations()}" varStatus="counter">
+                            <dl>
+                                <dt>Название организации</dt>
+                                <dd><input type="text" name="${type.name()}" size="30" value="${organization.name}">
+
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>Сайт организации</dt>
+                                <dd><input type="text" name="${type.name()}url" size="30"
+                                           value="${organization.homePage.url}"></dd>
+                            </dl>
+
+                            <c:forEach var="period" items="${organization.getPeriods()}">
+                                <dl>
+                                    <dt>Начало работы</dt>
+                                    <dd><input type="date" name="${type.name()}dateFrom${counter.index}" size="30"
+                                               value="${period.getDateFrom()}"></dd>
+                                </dl>
+                                <dl>
+                                    <dt>Конец работы</dt>
+                                    <dd><input type="date" name="${type.name()}dateTo${counter.index}" size="30"
+                                               value="${period.getDateTo()}"></dd>
+                                </dl>
+                                <dl>
+                                    <dt>Должность</dt>
+                                    <dd><input type="text" name="${type.name()}title${counter.index}" size="30"
+                                               value="${period.getTitle()}"></dd>
+                                </dl>
+                                <dl>
+                                    <dt>Обязанности</dt>
+                                    <dd><textarea rows="10" cols="30"
+                                                  name="${type.name()}description${counter.index}">${period.getDescription()}</textarea>
+                                    </dd>
+                                </dl>
+                            </c:forEach>
+
+
+                        </c:forEach>
+                    </c:when>
+
                 </c:choose>
             </dl>
         </c:forEach>

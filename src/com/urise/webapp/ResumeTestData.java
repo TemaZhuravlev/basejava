@@ -87,5 +87,7 @@ public class ResumeTestData {
             System.out.println(section.getValue());
             System.out.println();
         }
+
+//        System.out.println(resume1.getSection(SectionType.PERSONAL));
     }
 }

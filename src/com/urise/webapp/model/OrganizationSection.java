@@ -9,6 +9,7 @@ import java.util.Objects;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class OrganizationSection extends AbstractSection {
     private static final long serialVersionUID = 1L;
+    public static final OrganizationSection EMPTY = new OrganizationSection(Organization.EMPTY);
 
     private List<Organization> organizations;
 
