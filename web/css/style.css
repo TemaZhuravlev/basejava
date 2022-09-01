@@ -46,7 +46,7 @@ dl {
 
 dt {
     display: inline-block;
-    width: 170px;
+    width: 190px;
 }
 
 dd {
@@ -110,7 +110,7 @@ section a {
 
 .organization {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 22px;
     line-height: 30px;
     margin-left: 207px;
     padding-top: 30px;
@@ -171,4 +171,29 @@ section a {
     display: inline-flex;
     align-items: center;
     justify-content: end;
+}
+button{
+    margin: 5px;
+}
+.organization-edit .chld .period{
+    background: #c0dee344;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+.organization-edit .chld .period dl{
+    background: none;
+}
+.organization-edit .period button{
+    float: right;
+    display: inline;
+}
+.organization-edit .chld .name{
+    background: #886fed44;
+    padding: 5px;
+    width: 100%;
+}
+.organization-edit .chld .name dl{
+    background: none;
 }

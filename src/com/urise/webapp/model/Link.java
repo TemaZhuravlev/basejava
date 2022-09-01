@@ -48,6 +48,9 @@ public class Link implements Serializable {
     }
 
     public String toHtml() {
-        return "<a href='" + url + "' title='" + title + "'>";
+        if (url == null || url.equals("")) {
+            return "<p>" + title + "</p>";
+        }
+        return "<a href='" + url + "' title='" + title + "'>" + title + "</a>";
     }
 }

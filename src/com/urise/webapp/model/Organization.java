@@ -58,7 +58,7 @@ public class Organization implements Serializable {
         for (Period element : periods) {
             temp.append(element.toHtml());
         }
-        return "<div class='organization'>" + homePage.toHtml() + name + "</a></div>" + temp;
+        return "<div class='organization'>" + homePage.toHtml() + "</div>" + temp;
     }
 
     @Override

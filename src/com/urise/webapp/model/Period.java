@@ -77,7 +77,10 @@ public class Period implements Serializable {
 
     private String dateConvert(LocalDate date) {
         if (!date.equals(DateUtil.EMPTY)) {
-            return date.equals(DateUtil.NOW) ? "Сейчас" : date.format(DateTimeFormatter.ofPattern("MM/YYYY"));
+            if(date.equals(DateUtil.NOW) || date.isAfter(DateUtil.NOW)){
+                return "Сейчас";
+            }
+            return date.format(DateTimeFormatter.ofPattern("MM/YYYY"));
         }
         return "";
     }
